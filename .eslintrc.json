@@ -16,9 +16,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "linterOptions": {
-    "exclude": ["./craco.config.js"]
-  },
   "plugins": ["react"],
   "rules": {
     "react/jsx-filename-extension": [
@@ -27,7 +24,9 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "warn"
   },
   "settings": {
     "import/resolver": {
