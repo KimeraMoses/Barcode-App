@@ -6,12 +6,14 @@ export function LoggedInLayout({ children }) {
   const { loggedIn } = styles;
 
   return (
-    <div className={loggedIn}>
+    <>
       <div>
         <Navbar />
       </div>
-      <div>{children}</div>
-    </div>
+      <div className={loggedIn}>
+        <div>{children}</div>
+      </div>
+    </>
   );
 }
 
