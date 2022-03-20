@@ -1,14 +1,15 @@
-import { useTranslation } from 'react-i18next';
-import styles from './OnSiteUsers.styles.scss';
+// import { useTranslation } from 'react-i18next';
+import { Heading } from 'components';
+import './OnSiteUsers.styles.scss';
 
 function OnSiteUsers() {
-  const { t } = useTranslation();
-  const { onsite } = styles;
+  // const { t } = useTranslation();
   return (
-    <div className={onsite}>
+    <div className="on-site">
       <div>
-        <div className="App">{t('title', { framework: 'React' })}</div>
+        <Heading>On-Site Users</Heading>
       </div>
+      <div>Table</div>
     </div>
   );
 }
