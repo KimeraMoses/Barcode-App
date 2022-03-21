@@ -1,0 +1,31 @@
+.modal {
+  display: none;
+}
+.modal.modal-show {
+  display: unset;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  .modal__inner {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 12px;
+    max-width: 536px;
+    max-height: 578px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    padding: 32px;
+    &-heading {
+      font-size: 24px;
+      letter-spacing: 0px;
+      color: #000000;
+      opacity: 1;
+    }
+  }
+}

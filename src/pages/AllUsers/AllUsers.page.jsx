@@ -1,10 +1,10 @@
 // import { useTranslation } from 'react-i18next';
-import { Input, Select } from 'antd';
+import { Input, Select, Space } from 'antd';
 import { Button, Heading, Table, Modal } from 'components';
-import { Search } from 'icons';
+import { Document, Search, Trash } from 'icons';
 import { exportToExcel } from 'utils';
 import { useState } from 'react';
-import './OnSiteUsers.styles.scss';
+import './AllUsers.styles.scss';
 
 const { Option } = Select;
 
@@ -21,21 +21,48 @@ const columns = [
     sorter: (a, b) => a.name.length - b.name.length
   },
   {
+    title: 'COMPANY',
+    dataIndex: 'company',
+    sorter: (a, b) => a.company.length - b.company.length
+  },
+  {
     title: 'STATUS',
     dataIndex: 'status',
     width: 500,
-    render: (text) => <div className="on-site__status">{text}</div>,
+    render: (text) => (
+      <div
+        className={`all-users__status ${text === 'Disabled' ? 'all-users__status-disabled' : ''}`}>
+        {text}
+      </div>
+    ),
     sorter: (a, b) => a.status.length - b.status.length
   },
   {
-    title: 'LAST CHECK IN',
-    dataIndex: 'last_check_in',
-    sorter: (a, b) => a.last_check_in - b.last_check_in
+    title: 'CHECK INS',
+    dataIndex: 'check_ins',
+    sorter: (a, b) => a.check_ins - b.check_ins
   },
   {
-    title: 'LAST CHECK OUT',
-    dataIndex: 'last_check_out',
-    sorter: (a, b) => a.last_check_out - b.last_check_out
+    title: 'CHECK OUTS',
+    dataIndex: 'check_outs',
+    sorter: (a, b) => a.check_outs - b.check_outs
+  },
+  {
+    title: 'ACTIONS',
+    dataIndex: 'actions',
+    render: (text, record) => {
+      console.log(record);
+      return (
+        <Space size="middle">
+          <div>
+            <Document />
+          </div>
+          <div>
+            <Trash />
+          </div>
+        </Space>
+      );
+    }
   }
 ];
 
@@ -46,18 +73,18 @@ for (let i = 0; i < 50; i += 1) {
     key: i,
     uid: Number(`0${i}54${i}`),
     name: `Paul Elliott ${i}`,
-    status: 'Currently Checked In',
-    last_check_in: `Mar 5th, 2022 at 01:00:00 PM`,
-    last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
+    company: `Mind 2 Matter`,
+    status: i % 2 === 0 ? 'Currently Enabled' : 'Disabled',
+    check_ins: `${i} Check Ins Total`,
+    check_outs: `${i} Check Ins Total`
   });
 }
 
-function OnSiteUsers() {
+function AllUsers() {
   // const { t } = useTranslation();
 
   const [rows, setRows] = useState([]);
-  const [checkInModal, setCheckInModal] = useState(false);
-  const [checkOutModal, setCheckOutModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const rowSelection = {
     type: 'checkbox',
@@ -73,25 +100,24 @@ function OnSiteUsers() {
   };
 
   return (
-    <div className="on-site">
+    <div className="all-users">
       <Modal
-        showModal={checkInModal || checkOutModal}
-        heading={checkInModal ? 'Check In Users' : 'Check Out Users'}
+        showModal={modal}
+        heading="Add New User"
         content={
-          <div className="on-site__modal">
+          <div className="all-users__modal">
             <div>
-              <div className="on-site__modal-content">
-                Please select the users from the list given below in order to manually check them{' '}
-                {checkInModal ? 'in to' : 'out of'}
-                the system.
+              <div className="all-users__modal-content">
+                Please enter the required information below in order to add a new user record to the
+                table being displayed.
               </div>
-              <div className="on-site__modal-list">
+              <div className="all-users__modal-list">
                 {rows.map((row) => {
                   console.log(row);
 
                   return (
-                    <div className="on-site__modal-list-el">
-                      <div className="on-site__modal-list-el-cn">
+                    <div className="all-users__modal-list-el">
+                      <div className="all-users__modal-list-el-cn">
                         <input type="checkbox" checked />
                         <div>{row?.name}</div>
                       </div>
@@ -102,27 +128,19 @@ function OnSiteUsers() {
               </div>
             </div>
             <div>
-              <div className="on-site__modal-buttons">
+              <div className="all-users__modal-buttons">
                 <Button
                   variant="secondary"
                   onClick={() => {
-                    if (checkInModal) {
-                      setCheckInModal(false);
-                    } else {
-                      setCheckOutModal(false);
-                    }
+                    setModal(false);
                   }}>
                   Cancel
                 </Button>
                 <Button
                   onClick={() => {
-                    if (checkInModal) {
-                      setCheckInModal(false);
-                    } else {
-                      setCheckOutModal(false);
-                    }
+                    setModal(false);
                   }}>
-                  {checkInModal ? 'Check In Users' : 'Check Out Users'}
+                  Add New User
                 </Button>
               </div>
             </div>
@@ -130,56 +148,55 @@ function OnSiteUsers() {
         }
       />
       <div>
-        <Heading>On-Site Users</Heading>
+        <Heading>All Users</Heading>
       </div>
       <div>
-        <div className="on-site__filters">
-          <div className="on-site__filters-search-wrapper">
+        <div className="all-users__filters">
+          <div className="all-users__filters-search-wrapper">
             <Input
-              className="on-site__filters-search"
-              placeholder="Search On-Site Users..."
+              className="all-users__filters-search"
+              placeholder="Search All Users..."
               suffix={<Search />}
             />
             <Select
               defaultValue="Filter By : Company"
-              className="on-site__filters-select"
+              className="all-users__filters-select"
               dropdownClassName="custom-select__dropdown">
               <Option value="company">Company</Option>
               <Option value="date">Date</Option>
               <Option value="user">User</Option>
             </Select>
           </div>
-          <div className="on-site__filters-buttons">
+          <div className="all-users__filters-buttons">
             <Button
               variant="secondary"
               onClick={() => {
-                exportToExcel(data, 'On-Site Users');
+                exportToExcel(data, 'all-users Users');
+              }}>
+              Import CSV
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                exportToExcel(data, 'all-users Users');
               }}>
               Export CSV
             </Button>
             <Button
-              variant="secondary"
-              disabled={!rows.length}
+              // disabled={!rows.length}
               onClick={() => {
-                setCheckInModal(true);
+                setModal(true);
               }}>
-              Check In Users
-            </Button>
-            <Button
-              disabled={!rows.length}
-              onClick={() => {
-                setCheckOutModal(true);
-              }}>
-              Check Out Users
+              Add New User
             </Button>
           </div>
         </div>
       </div>
       <div>
-        <Table columns={columns} data={data} rowSelection={rowSelection} />
+        <Table columns={columns} data={data} />
       </div>
     </div>
   );
 }
 
-export default OnSiteUsers;
+export default AllUsers;

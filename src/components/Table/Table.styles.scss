@@ -12,6 +12,7 @@
       color: #8c8c8c;
       text-transform: uppercase;
       font-size: 12px;
+      background: #ffffff;
     }
 
     // Table pagination styles
@@ -54,15 +55,6 @@
         }
       }
     }
-  }
-
-  .custom-table__status {
-    border-radius: 12px;
-    background: #e6fffb;
-    padding: 12px 24px;
-    color: #13c2c2;
-    max-width: 200px;
-    font-weight: 500;
   }
 }
 

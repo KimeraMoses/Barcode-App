@@ -27,7 +27,8 @@
     "react/react-in-jsx-scope": "off",
     "import/prefer-default-export": "off",
     "no-unused-vars": "warn",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "react/forbid-prop-types": "off"
   },
   "settings": {
     "import/resolver": {

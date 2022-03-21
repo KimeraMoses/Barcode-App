@@ -1,17 +1,17 @@
-.on-site {
+.all-users {
   margin-top: 40px;
-  .on-site__filters {
+  .all-users__filters {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 40px 0px;
-    .on-site__filters-search-wrapper {
+    .all-users__filters-search-wrapper {
       display: flex;
       align-items: center;
       gap: 20px;
     }
     // Input Styles
-    .on-site__filters-search {
+    .all-users__filters-search {
       padding: 20px;
       border-radius: 12px;
       border: 1px solid #e8e8e8;
@@ -26,7 +26,7 @@
     }
 
     // Select Styles
-    .on-site__filters-select {
+    .all-users__filters-select {
       height: 60px;
       min-width: 260px;
       -moz-appearance: none;
@@ -42,7 +42,7 @@
       }
     }
 
-    .on-site__filters-buttons {
+    .all-users__filters-buttons {
       display: flex;
       align-items: center;
       gap: 20px;
@@ -50,7 +50,7 @@
   }
 }
 
-.on-site__status {
+.all-users__status {
   border-radius: 12px;
   background: #e6fffb;
   padding: 12px 24px;
@@ -59,24 +59,24 @@
   font-weight: 500;
 }
 
-.on-site__status.on-site__status-disabled {
+.all-users__status.all-users__status-disabled {
   background: #fffbe6;
   color: #faad14;
 }
 
-.on-site__modal {
+.all-users__modal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  .on-site__modal-content {
+  .all-users__modal-content {
     margin-top: 16px;
     line-height: 32px;
     color: #8c8c8c;
     max-width: 400px;
   }
 
-  .on-site__modal-list {
+  .all-users__modal-list {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -103,7 +103,7 @@
     }
   }
 
-  .on-site__modal-buttons {
+  .all-users__modal-buttons {
     margin-top: 50px;
     display: grid;
     gap: 16px;
