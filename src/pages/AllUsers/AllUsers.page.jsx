@@ -1,15 +1,16 @@
 // import { useTranslation } from 'react-i18next';
 import { Input, Select, Space } from 'antd';
+import * as XLSX from 'xlsx';
 import { Button, Heading, Table, Modal } from 'components';
 import { Document, Search, Trash } from 'icons';
-import { exportToExcel } from 'utils';
-import { useState } from 'react';
+import { exportToExcel, processData } from 'utils';
+import { useEffect, useRef, useState } from 'react';
 import './AllUsers.styles.scss';
 
 const { Option } = Select;
 
 // Columns for table
-const columns = [
+const tableCol = [
   {
     title: 'USER ID',
     dataIndex: 'uid',
@@ -51,7 +52,6 @@ const columns = [
     title: 'ACTIONS',
     dataIndex: 'actions',
     render: (text, record) => {
-      console.log(record);
       return (
         <Space size="middle">
           <div>
@@ -81,23 +81,30 @@ for (let i = 0; i < 50; i += 1) {
 }
 
 function AllUsers() {
-  // const { t } = useTranslation();
-
-  const [rows, setRows] = useState([]);
   const [modal, setModal] = useState(false);
 
-  const rowSelection = {
-    type: 'checkbox',
-    onChange: (selectedRowKeys, selectedRows) => {
-      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      setRows(selectedRows);
-    },
-    getCheckboxProps: (record) => ({
-      // disabled: record.name === 'Disabled User'
-      // Column configuration not to be checked
-      // name: record.name
-    })
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      /* Parse data */
+      const bstr = evt.target.result;
+      const wb = XLSX.read(bstr, { type: 'binary' });
+      /* Get first worksheet */
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      /* Convert array of arrays */
+      const csvData = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+
+      const { columns, list } = processData(csvData);
+
+      // Uplaod to backend here
+      console.log(columns, list);
+    };
+    reader.readAsBinaryString(file);
   };
+
+  const inputFile = useRef(null);
 
   return (
     <div className="all-users">
@@ -112,19 +119,13 @@ function AllUsers() {
                 table being displayed.
               </div>
               <div className="all-users__modal-list">
-                {rows.map((row) => {
-                  console.log(row);
-
-                  return (
-                    <div className="all-users__modal-list-el">
-                      <div className="all-users__modal-list-el-cn">
-                        <input type="checkbox" checked />
-                        <div>{row?.name}</div>
-                      </div>
-                      <div>User {row?.uid}</div>
-                    </div>
-                  );
-                })}
+                <div className="all-users__modal-list-el">
+                  <div className="all-users__modal-list-el-cn">
+                    <input type="checkbox" defaultChecked />
+                    <div>Sam</div>
+                  </div>
+                  <div>User 123456</div>
+                </div>
               </div>
             </div>
             <div>
@@ -168,10 +169,17 @@ function AllUsers() {
             </Select>
           </div>
           <div className="all-users__filters-buttons">
+            <input
+              type="file"
+              id="file"
+              ref={inputFile}
+              style={{ display: 'none' }}
+              onChange={handleFileUpload}
+            />
             <Button
               variant="secondary"
               onClick={() => {
-                exportToExcel(data, 'all-users Users');
+                inputFile.current.click();
               }}>
               Import CSV
             </Button>
@@ -193,7 +201,7 @@ function AllUsers() {
         </div>
       </div>
       <div>
-        <Table columns={columns} data={data} />
+        <Table columns={tableCol} data={data} />
       </div>
     </div>
   );

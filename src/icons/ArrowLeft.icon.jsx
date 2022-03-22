@@ -20,7 +20,6 @@ export function ArrowLeft({ color }) {
       />
       <path
         id="Vector-2"
-        dataName="Vector"
         d="M14.726,0H0"
         transform="translate(3.211 10.5)"
         fill="none"
@@ -31,7 +30,6 @@ export function ArrowLeft({ color }) {
       />
       <path
         id="Vector-3"
-        dataName="Vector"
         d="M0,0H21V21H0Z"
         transform="translate(21 21) rotate(180)"
         fill="none"

@@ -14,7 +14,6 @@ export function Document() {
         />
         <path
           id="Vector-2"
-          dataName="Vector"
           d="M8,8H4C1,8,0,7,0,4V0Z"
           transform="translate(186 190)"
           fill="none"
@@ -25,7 +24,6 @@ export function Document() {
         />
         <path
           id="Vector-3"
-          dataName="Vector"
           d="M0,0H6"
           transform="translate(179 201)"
           fill="none"
@@ -36,7 +34,6 @@ export function Document() {
         />
         <path
           id="Vector-4"
-          dataName="Vector"
           d="M0,0H4"
           transform="translate(179 205)"
           fill="none"
@@ -47,7 +44,6 @@ export function Document() {
         />
         <path
           id="Vector-5"
-          dataName="Vector"
           d="M0,0H24V24H0Z"
           transform="translate(172 188)"
           fill="none"

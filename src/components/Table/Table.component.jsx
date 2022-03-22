@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Table as AntdTable } from 'antd';
 import { ArrowLeft, ArrowRight } from 'icons';
 import './Table.styles.scss';
@@ -40,15 +39,3 @@ export function Table({ data, columns, rowSelection }) {
     </div>
   );
 }
-
-Table.propTypes = {
-  data: PropTypes.array,
-  columns: PropTypes.array,
-  rowSelection: PropTypes.oneOf(PropTypes.object, PropTypes.bool)
-};
-
-Table.defaultProps = {
-  data: [],
-  columns: [],
-  rowSelection: false
-};

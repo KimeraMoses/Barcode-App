@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './LoggedIn.module.scss';
 import { Navbar } from './components/Navbar.component';
 
@@ -16,7 +15,3 @@ export function LoggedInLayout({ children }) {
     </>
   );
 }
-
-LoggedInLayout.propTypes = {
-  children: PropTypes.element.isRequired
-};
