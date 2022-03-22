@@ -1,7 +1,8 @@
+@import '../../styles/mixins';
+
 .custom-button-component {
   background: #096dd9;
   border-radius: 12px;
-  padding: 0px 40px;
   min-height: 60px;
   display: inline-block;
   border: none;
@@ -14,6 +15,10 @@
   transition: background 250ms ease-in-out, transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
+  padding: 0px 12px;
+  @include moreThanDesktop() {
+    padding: 0px 40px;
+  }
 }
 
 .custom-button-component.custom-button-component__secondary {
