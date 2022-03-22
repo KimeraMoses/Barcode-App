@@ -66,22 +66,11 @@ const tableCol = [
   }
 ];
 
-// Data for table
-const data = [];
-for (let i = 0; i < 50; i += 1) {
-  data.push({
-    key: i,
-    uid: Number(`0${i}54${i}`),
-    name: `Paul Elliott ${i}`,
-    company: `Mind 2 Matter`,
-    status: i % 2 === 0 ? 'Currently Enabled' : 'Disabled',
-    check_ins: `${i} Check Ins Total`,
-    check_outs: `${i} Check Ins Total`
-  });
-}
-
 function AllUsers() {
   const [modal, setModal] = useState(false);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('user');
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -105,6 +94,75 @@ function AllUsers() {
   };
 
   const inputFile = useRef(null);
+
+  // Setting data for table
+  useEffect(() => {
+    // Data for table
+    const dataHolder = [];
+    for (let i = 0; i < 50; i += 1) {
+      dataHolder.push({
+        key: i,
+        uid: Number(`0${i}54${i}`),
+        name: `Paul Elliott ${i}`,
+        company: `Mind 2 Matter ${i}`,
+        status: i % 2 === 0 ? 'Currently Enabled' : 'Disabled',
+        check_ins: `${i} Check Ins Total`,
+        check_outs: `${i} Check Ins Total`
+      });
+    }
+    setData(dataHolder);
+  }, []);
+
+  // Filter Data
+  const handleSearch = (e) => {
+    if (e.target.value) {
+      if (selectedFilter === 'user') {
+        const newData = data.filter((item) => {
+          return item?.name.indexOf(e.target.value) !== -1;
+        });
+        if (newData.length) {
+          setFilteredData(newData);
+        } else {
+          setFilteredData([
+            {
+              key: 'Not Found',
+              uid: 'Not Found',
+              name: 'Not Found',
+              company: 'Not Found',
+              status: 'Not Found',
+              check_ins: 'Not Found',
+              check_outs: 'Not Found'
+            }
+          ]);
+        }
+      } else if (selectedFilter === 'company') {
+        const newData = data.filter((item) => {
+          return item?.company.includes(e.target.value);
+        });
+        setFilteredData(newData);
+      } else if (selectedFilter === 'date') {
+        const newData = data.filter((item) => {
+          return item?.check_ins.indexOf(e.target.value) !== -1;
+        });
+        if (newData.length) {
+          setFilteredData(newData);
+        } else {
+          setFilteredData('Not Found');
+        }
+      }
+    } else {
+      setFilteredData('');
+    }
+  };
+
+  let placeholderText;
+  if (selectedFilter === 'user') {
+    placeholderText = 'Users';
+  } else if (selectedFilter === 'company') {
+    placeholderText = 'Users by Companies';
+  } else if (selectedFilter === 'date') {
+    placeholderText = 'Users by Date';
+  }
 
   return (
     <div className="all-users">
@@ -156,16 +214,20 @@ function AllUsers() {
           <div className="all-users__filters-search-wrapper">
             <Input
               className="all-users__filters-search"
-              placeholder="Search All Users..."
+              placeholder={`Search All ${placeholderText}...`}
               suffix={<Search />}
+              onChange={handleSearch}
             />
             <Select
-              defaultValue="Filter By : Company"
+              value={selectedFilter}
               className="all-users__filters-select"
-              dropdownClassName="custom-select__dropdown">
-              <Option value="company">Company</Option>
-              <Option value="date">Date</Option>
-              <Option value="user">User</Option>
+              dropdownClassName="custom-select__dropdown"
+              onChange={(selected) => {
+                setSelectedFilter(selected);
+              }}>
+              <Option value="company">Filter By : Company</Option>
+              <Option value="date">Filter By : Date</Option>
+              <Option value="user">Filter By : User</Option>
             </Select>
           </div>
           <div className="all-users__filters-buttons">
@@ -191,7 +253,6 @@ function AllUsers() {
               Export CSV
             </Button>
             <Button
-              // disabled={!rows.length}
               onClick={() => {
                 setModal(true);
               }}>
@@ -201,7 +262,7 @@ function AllUsers() {
         </div>
       </div>
       <div>
-        <Table columns={tableCol} data={data} />
+        <Table columns={tableCol} data={filteredData.length ? filteredData : data} />
       </div>
     </div>
   );

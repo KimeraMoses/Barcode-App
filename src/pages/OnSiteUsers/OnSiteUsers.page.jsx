@@ -3,7 +3,7 @@ import { Input, Select } from 'antd';
 import { Button, Heading, Table, Modal } from 'components';
 import { Search } from 'icons';
 import { exportToExcel } from 'utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './OnSiteUsers.styles.scss';
 
 const { Option } = Select;
@@ -39,25 +39,16 @@ const columns = [
   }
 ];
 
-// Data for table
-const data = [];
-for (let i = 0; i < 50; i += 1) {
-  data.push({
-    key: i,
-    uid: Number(`0${i}54${i}`),
-    name: `Paul Elliott ${i}`,
-    status: 'Currently Checked In',
-    last_check_in: `Mar 5th, 2022 at 01:00:00 PM`,
-    last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
-  });
-}
-
 function OnSiteUsers() {
   // const { t } = useTranslation();
 
   const [rows, setRows] = useState([]);
   const [checkInModal, setCheckInModal] = useState(false);
   const [checkOutModal, setCheckOutModal] = useState(false);
+
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('user');
 
   const rowSelection = {
     type: 'checkbox',
@@ -71,6 +62,76 @@ function OnSiteUsers() {
       // name: record.name
     })
   };
+
+  // Setting data for table
+  useEffect(() => {
+    // Data for table
+    const dataHolder = [];
+    for (let i = 0; i < 50; i += 1) {
+      dataHolder.push({
+        key: i,
+        uid: Number(`0${i}54${i}`),
+        name: `Paul Elliott ${i}`,
+        status: 'Currently Checked In',
+        last_check_in: `Mar 5th, 2022 at 01:00:${i} PM`,
+        last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
+      });
+    }
+    setData(dataHolder);
+  }, []);
+
+  const handleSearch = (e) => {
+    if (e.target.value) {
+      if (selectedFilter === 'user') {
+        const newData = data.filter((item) => {
+          return item?.name.indexOf(e.target.value) !== -1;
+        });
+        if (newData.length) {
+          setFilteredData(newData);
+        } else {
+          setFilteredData([
+            {
+              key: 'Not Found',
+              uid: 'Not Found',
+              name: 'Not Found',
+              status: 'Not Found',
+              last_check_in: 'Not Found',
+              last_check_out: 'Not Found'
+            }
+          ]);
+        }
+      }
+      // else if (selectedFilter === 'company') {
+      //   const newData = data.filter((item) => {
+      //     return item?.company.includes(e.target.value);
+      //   });
+      //   setFilteredData(newData);
+      // }
+      else if (selectedFilter === 'date') {
+        const newData = data.filter((item) => {
+          return item?.last_check_in.indexOf(e.target.value) !== -1;
+        });
+        if (newData.length) {
+          setFilteredData(newData);
+        } else {
+          setFilteredData('Not Found');
+        }
+      }
+    } else {
+      setFilteredData('');
+    }
+  };
+
+  let placeholderText;
+  if (selectedFilter === 'user') {
+    placeholderText = 'Users';
+  }
+  // else if (selectedFilter === 'company') {
+  //   placeholderText = 'Users by Companies';
+  // }
+  else if (selectedFilter === 'date') {
+    placeholderText = 'Users by Date';
+  }
 
   return (
     <div className="on-site">
@@ -88,7 +149,6 @@ function OnSiteUsers() {
               <div className="on-site__modal-list">
                 {rows.map((row) => {
                   console.log(row);
-
                   return (
                     <div className="on-site__modal-list-el">
                       <div className="on-site__modal-list-el-cn">
@@ -137,16 +197,20 @@ function OnSiteUsers() {
           <div className="on-site__filters-search-wrapper">
             <Input
               className="on-site__filters-search"
-              placeholder="Search On-Site Users..."
+              placeholder={`Search On-Site ${placeholderText}...`}
               suffix={<Search />}
+              onChange={handleSearch}
             />
             <Select
-              defaultValue="Filter By : Company"
+              value={selectedFilter}
               className="on-site__filters-select"
-              dropdownClassName="custom-select__dropdown">
-              <Option value="company">Company</Option>
-              <Option value="date">Date</Option>
-              <Option value="user">User</Option>
+              dropdownClassName="custom-select__dropdown"
+              onChange={(selected) => {
+                setSelectedFilter(selected);
+              }}>
+              {/* <Option value="company">Filter By : Company</Option> */}
+              <Option value="date">Filter By : Date</Option>
+              <Option value="user">Filter By : User</Option>
             </Select>
           </div>
           <div className="on-site__filters-buttons">
@@ -176,7 +240,11 @@ function OnSiteUsers() {
         </div>
       </div>
       <div>
-        <Table columns={columns} data={data} rowSelection={rowSelection} />
+        <Table
+          columns={columns}
+          data={filteredData.length ? filteredData : data}
+          rowSelection={rowSelection}
+        />
       </div>
     </div>
   );
