@@ -1,21 +1,36 @@
+@import '../../styles/mixins';
+
 .all-users {
   margin-top: 40px;
   .all-users__filters {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    @include moreThanDesktop() {
+      flex-direction: row;
+    }
     align-items: center;
     margin: 40px 0px;
     .all-users__filters-search-wrapper {
       display: flex;
       align-items: center;
       gap: 20px;
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
     }
     // Input Styles
     .all-users__filters-search {
       padding: 20px;
       border-radius: 12px;
       border: 1px solid #e8e8e8;
-      min-width: 398px;
+      width: 100%;
+      @include moreThanDesktop() {
+        min-width: 398px;
+      }
       .ant-input {
         &::placeholder {
           font: normal normal normal 16px/21px Roboto;
@@ -28,10 +43,15 @@
     // Select Styles
     .all-users__filters-select {
       height: 60px;
-      min-width: 260px;
       -moz-appearance: none;
       -webkit-appearance: none;
       appearance: none;
+      width: 100%;
+      margin-bottom: 20px;
+      @include moreThanMobile {
+        min-width: 260px;
+        margin-bottom: 0px;
+      }
       .ant-select-selector {
         border-radius: 12px;
       }
@@ -46,6 +66,19 @@
       display: flex;
       align-items: center;
       gap: 20px;
+
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+      button {
+        width: 100%;
+        @include moreThanDesktop() {
+          width: auto;
+        }
+      }
     }
   }
 }

@@ -35,6 +35,7 @@ export function Table({ data, columns, rowSelection }) {
           itemRender,
           showTotal: (total, range) => `Showing ${range[0]}-${range[1]} of ${total} Records`
         }}
+        scroll={{ x: true }}
       />
     </div>
   );
