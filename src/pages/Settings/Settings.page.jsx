@@ -1,5 +1,5 @@
 import { Heading } from 'components';
-import { SiteSettings } from './sections';
+import { SiteSettings, AppSettings, ColorSettings } from './sections';
 import './Settings.styles.scss';
 
 function Settings() {
@@ -10,6 +10,8 @@ function Settings() {
       </div>
       <div className="settings-page__cards">
         <SiteSettings />
+        <AppSettings />
+        <ColorSettings />
       </div>
     </div>
   );
