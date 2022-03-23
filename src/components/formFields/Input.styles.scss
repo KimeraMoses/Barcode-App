@@ -1,0 +1,51 @@
+.custom-input {
+  width: 100%;
+  .custom-input__el {
+    height: 64px;
+    width: 100%;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #fafafa;
+    padding-left: 24px;
+    transition: all 0.2s ease-in;
+    &::placeholder {
+      color: #8c8c8c;
+      font-size: 16px;
+    }
+    &:focus-visible {
+      border: 1px solid #fafafa;
+      outline: none;
+    }
+  }
+
+  .custom-input__el.custom-input__el-invalid {
+    border: 1px solid #ff0000;
+    &:focus-visible {
+      border: 1px solid #ff0000;
+      outline: none;
+    }
+  }
+
+  .custom-input__error {
+    color: #ff0000;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+  }
+  .custom-input__error.custom-input__error-show {
+    visibility: visible;
+    animation-name: fadeInDown;
+    animation-fill-mode: both;
+    animation-duration: 0.3s;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

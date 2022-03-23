@@ -3,3 +3,5 @@ export { Button } from './Button/Button.component';
 export { Modal } from './Modal/Modal.component';
 // Atoms
 export * from './atoms';
+// Form Fields
+export * from './formFields';
