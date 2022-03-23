@@ -1,0 +1,29 @@
+.custom-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  width: 100%;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #fafafa;
+  padding-left: 24px;
+  padding-right: 24px;
+  &__label {
+    color: #8c8c8c;
+    font-size: 16px;
+  }
+}
+
+.custom-switch__error {
+  color: #ff0000;
+  font-size: 14px;
+  margin: 5px 0 0 0;
+  visibility: hidden;
+}
+.custom-switch__error.custom-switch__error-show {
+  visibility: visible;
+  animation-name: fadeInDown;
+  animation-fill-mode: both;
+  animation-duration: 0.3s;
+}

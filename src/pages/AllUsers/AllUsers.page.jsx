@@ -7,7 +7,7 @@ import { AddUser } from './sections';
 import './AllUsers.styles.scss';
 
 function AllUsers() {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
 
   const inputFile = useRef(null);
   const buttons = [

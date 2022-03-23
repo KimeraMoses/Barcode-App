@@ -53,7 +53,7 @@ export function Table({ data, columns, rowSelection, buttons }) {
         ]);
       }
     } else {
-      setFilteredData('');
+      setFilteredData([]);
     }
   };
 
