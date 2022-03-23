@@ -1,15 +1,15 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './Navbar.styles.scss';
 import { useState } from 'react';
 
 const links = [
-  { path: '/', text: 'On-Site Users' },
-  { path: '/all-users', text: 'All Users' },
-  { path: '/check-in', text: 'Check-Ins & Check-Outs' },
-  { path: '/barcodes', text: 'Barcodes' },
-  { path: '/settings', text: 'Settings' }
+  { path: '/dashboard/onsite-users', text: 'On-Site Users' },
+  { path: '/dashboard/all-users', text: 'All Users' },
+  { path: '/dashboard/check-in', text: 'Check-Ins & Check-Outs' },
+  { path: '/dashboard/barcodes', text: 'Barcodes' },
+  { path: '/dashboard/settings', text: 'Settings' }
 ];
 
 export function Navbar() {
@@ -22,6 +22,7 @@ export function Navbar() {
     setVisible(false);
   };
 
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <div className="navbar">
