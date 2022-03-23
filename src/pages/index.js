@@ -13,6 +13,10 @@ export const dashboardPages = [
   {
     path: 'barcodes',
     Component: lazy(() => import('./Barcodes/Barcodes.page'))
+  },
+  {
+    path: 'settings',
+    Component: lazy(() => import('./Settings/Settings.page'))
   }
 ];
 

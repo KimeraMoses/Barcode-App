@@ -1,0 +1,10 @@
+.settings-page {
+  margin-top: 40px;
+
+  &__cards {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+  }
+}

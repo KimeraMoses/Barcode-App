@@ -1,0 +1,23 @@
+.custom-logo-uploader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 27px;
+
+  &__output {
+    width: 69px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    height: 64px;
+    border-radius: 16px;
+    img {
+      max-width: 37px;
+    }
+  }
+
+  &__el {
+    height: 64px;
+  }
+}

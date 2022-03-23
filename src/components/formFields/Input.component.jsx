@@ -1,10 +1,11 @@
 import { Field } from 'formik';
 import './Input.styles.scss';
 
-export function Input({ name, type, placeholder, customClass, errors, touched }) {
+export function Input({ name, type, placeholder, customClass, errors, touched, label }) {
   const invalid = errors?.[name] && touched?.[name];
   return (
     <div className="custom-input">
+      {label ? <div className="custom-input__label">{label}</div> : null}
       <Field
         id={name}
         name={name}
