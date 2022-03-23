@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import './Navbar.styles.scss';
@@ -22,7 +22,6 @@ export function Navbar() {
     setVisible(false);
   };
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <div className="navbar">
@@ -45,11 +44,11 @@ export function Navbar() {
         </div>
         <div className="navbar__links-right">
           <div className="navbar__links-right-lc">Live Count : 100</div>
-          <div className="navbar__links-right-btn">
+          <Link to="/" className="navbar__links-right-btn">
             <Button type="primary" size="small">
               Sign Out
             </Button>
-          </div>
+          </Link>
         </div>
       </div>
 
@@ -76,11 +75,11 @@ export function Navbar() {
             ))}
             <div className="navbar__drawer-links-right">
               <div className="navbar__drawer-links-right-lc">Live Count : 100</div>
-              <div className="navbar__drawer-links-right-btn">
+              <Link to="/" className="navbar__drawer-links-right-btn">
                 <Button type="primary" size="small">
                   Sign Out
                 </Button>
-              </div>
+              </Link>
             </div>
           </div>
         </Drawer>

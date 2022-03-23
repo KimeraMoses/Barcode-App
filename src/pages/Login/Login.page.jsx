@@ -10,10 +10,10 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object().shape({
-  user: Yup.string().required('This field is Required!').min(3, 'Too Short!').max(50, 'Too Long!'),
+  user: Yup.string().required('This field is Required!').min(4, 'Too Short!').max(50, 'Too Long!'),
   password: Yup.string()
     .required('This field is Required!')
-    .min(3, 'Too Short!')
+    .min(4, 'Too Short!')
     .max(50, 'Too Long!')
 });
 

@@ -12,13 +12,8 @@ export function Input({ name, type, placeholder, customClass, errors, touched })
         placeholder={placeholder}
         className={`custom-input__el ${invalid ? 'custom-input__el-invalid' : ''} ${customClass}`}
       />
-      <p
-        className={`custom-input__error ${
-          errors?.[name] && touched?.[name]
-            ? 'custom-input__error-show'
-            : 'custom-input__error-hide'
-        }`}>
-        {errors?.[name]}
+      <p className={`custom-input__error ${invalid ? 'custom-input__error-show' : ''}`}>
+        {errors?.[name] || 'Error'}
       </p>
     </div>
   );
