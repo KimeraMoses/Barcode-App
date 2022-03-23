@@ -1,2 +1,2 @@
 export { handleFileUpload } from './handleFileUpload';
-export { columns, data } from './data';
+export { data, getColumns } from './data';
