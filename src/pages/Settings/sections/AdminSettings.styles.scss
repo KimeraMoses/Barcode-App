@@ -1,0 +1,21 @@
+.admin-settings {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+
+  &__heading {
+    font-size: 20px;
+  }
+
+  &__form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 64px);
+  }
+
+  &__submit-btn {
+    margin-top: 100px;
+  }
+}

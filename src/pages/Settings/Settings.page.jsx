@@ -1,5 +1,5 @@
 import { Heading } from 'components';
-import { SiteSettings, AppSettings, ColorSettings } from './sections';
+import { SiteSettings, AppSettings, ColorSettings, AdminSettings } from './sections';
 import './Settings.styles.scss';
 
 function Settings() {
@@ -12,6 +12,7 @@ function Settings() {
         <SiteSettings />
         <AppSettings />
         <ColorSettings />
+        <AdminSettings />
       </div>
     </div>
   );

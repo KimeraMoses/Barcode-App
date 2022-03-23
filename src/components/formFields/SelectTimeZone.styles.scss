@@ -1,0 +1,26 @@
+.custom-timezone-select {
+  select {
+    height: 64px;
+    width: 100%;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #fafafa;
+    padding-left: 24px;
+    transition: all 0.2s ease-in;
+    &::placeholder {
+      color: #8c8c8c;
+      font-size: 16px;
+    }
+    &:focus-visible {
+      border: 1px solid #fafafa;
+      outline: none;
+    }
+  }
+
+  &__label {
+    text-transform: uppercase;
+    font-size: 14px;
+    clor: #8c8c8c;
+    margin-bottom: 5px;
+  }
+}
