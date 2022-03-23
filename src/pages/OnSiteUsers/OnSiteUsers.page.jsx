@@ -1,12 +1,8 @@
 // import { useTranslation } from 'react-i18next';
-import { Input, Select } from 'antd';
 import { Button, Heading, Table, Modal } from 'components';
-import { Search } from 'icons';
 import { exportToExcel } from 'utils';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './OnSiteUsers.styles.scss';
-
-const { Option } = Select;
 
 // Columns for table
 const columns = [

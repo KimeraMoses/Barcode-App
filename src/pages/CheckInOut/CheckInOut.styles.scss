@@ -1,0 +1,19 @@
+@import '../../styles/mixins';
+
+.check-in-out {
+  margin-top: 40px;
+}
+
+.check-in-out__status {
+  border-radius: 12px;
+  background: #e6fffb;
+  padding: 12px 24px;
+  color: #13c2c2;
+  max-width: 200px;
+  font-weight: 500;
+}
+
+.check-in-out__status.check-in-out__status-disabled {
+  background: #fffbe6;
+  color: #faad14;
+}

@@ -1,0 +1,25 @@
+@import '../../styles/mixins';
+
+.barcodes {
+  margin-top: 40px;
+}
+
+.barcodes__status {
+  border-radius: 12px;
+  background: #e6fffb;
+  padding: 12px 24px;
+  color: #13c2c2;
+  max-width: 200px;
+  font-weight: 500;
+}
+
+.barcodes__status.barcodes__status-disabled {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.barcodes__image {
+  img {
+    max-width: 68px;
+  }
+}

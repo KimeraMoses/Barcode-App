@@ -3,9 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Heading, Table, Modal } from 'components';
 import { exportToExcel } from 'utils';
 import { handleFileUpload, data, getColumns } from './utils';
-import { AddUser, EditUser } from './sections';
+import { AddUser, EditUser, DeleteUser } from './sections';
 import './AllUsers.styles.scss';
-import { DeleteUser } from './sections/DeleteUser.section';
 
 function AllUsers() {
   const [modal, setModal] = useState(false);
