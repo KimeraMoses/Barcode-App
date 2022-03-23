@@ -61,6 +61,86 @@
       }
     }
   }
+
+  .custom-table__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0px;
+    flex-direction: column;
+    @include moreThanDesktop() {
+      flex-direction: row;
+    }
+    .custom-table__filters-search-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+    }
+    // Input Styles
+    .custom-table__filters-search {
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e8e8e8;
+      width: 100%;
+      @include moreThanDesktop() {
+        min-width: 398px;
+      }
+      .ant-input {
+        &::placeholder {
+          font: normal normal normal 16px/21px Roboto;
+          letter-spacing: 0px;
+          color: #8c8c8c;
+        }
+      }
+    }
+
+    // Select Styles
+    .custom-table__filters-select {
+      height: 60px;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      margin-bottom: 20px;
+      @include moreThanDesktop {
+        min-width: 260px;
+        margin-bottom: 0px;
+      }
+      .ant-select-selector {
+        border-radius: 12px;
+      }
+      .ant-select-selection-item {
+        font-size: 16px;
+        letter-spacing: 0px;
+        color: #8c8c8c;
+      }
+    }
+
+    .custom-table__filters-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+      button {
+        width: 100%;
+        @include moreThanDesktop() {
+          width: auto;
+        }
+      }
+    }
+  }
 }
 
 // Select Dropdown styles

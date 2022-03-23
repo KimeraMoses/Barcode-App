@@ -39,16 +39,24 @@ const columns = [
   }
 ];
 
+const data = [];
+for (let i = 0; i < 50; i += 1) {
+  data.push({
+    key: i,
+    uid: Number(`0${i}54${i}`),
+    name: `Paul Elliott ${i}`,
+    status: 'Currently Checked In',
+    last_check_in: `Mar 5th, 2022 at 01:00:${i} PM`,
+    last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
+  });
+}
+
 function OnSiteUsers() {
   // const { t } = useTranslation();
 
   const [rows, setRows] = useState([]);
   const [checkInModal, setCheckInModal] = useState(false);
   const [checkOutModal, setCheckOutModal] = useState(false);
-
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState('user');
 
   const rowSelection = {
     type: 'checkbox',
@@ -63,75 +71,21 @@ function OnSiteUsers() {
     })
   };
 
-  // Setting data for table
-  useEffect(() => {
-    // Data for table
-    const dataHolder = [];
-    for (let i = 0; i < 50; i += 1) {
-      dataHolder.push({
-        key: i,
-        uid: Number(`0${i}54${i}`),
-        name: `Paul Elliott ${i}`,
-        status: 'Currently Checked In',
-        last_check_in: `Mar 5th, 2022 at 01:00:${i} PM`,
-        last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
-      });
-    }
-    setData(dataHolder);
-  }, []);
-
-  const handleSearch = (e) => {
-    if (e.target.value) {
-      if (selectedFilter === 'user') {
-        const newData = data.filter((item) => {
-          return item?.name.indexOf(e.target.value) !== -1;
-        });
-        if (newData.length) {
-          setFilteredData(newData);
-        } else {
-          setFilteredData([
-            {
-              key: 'Not Found',
-              uid: 'Not Found',
-              name: 'Not Found',
-              status: 'Not Found',
-              last_check_in: 'Not Found',
-              last_check_out: 'Not Found'
-            }
-          ]);
-        }
-      }
-      // else if (selectedFilter === 'company') {
-      //   const newData = data.filter((item) => {
-      //     return item?.company.includes(e.target.value);
-      //   });
-      //   setFilteredData(newData);
-      // }
-      else if (selectedFilter === 'date') {
-        const newData = data.filter((item) => {
-          return item?.last_check_in.indexOf(e.target.value) !== -1;
-        });
-        if (newData.length) {
-          setFilteredData(newData);
-        } else {
-          setFilteredData('Not Found');
-        }
-      }
-    } else {
-      setFilteredData('');
-    }
-  };
-
-  let placeholderText;
-  if (selectedFilter === 'user') {
-    placeholderText = 'Users';
-  }
-  // else if (selectedFilter === 'company') {
-  //   placeholderText = 'Users by Companies';
-  // }
-  else if (selectedFilter === 'date') {
-    placeholderText = 'Users by Date';
-  }
+  // Buttons for Table
+  const buttons = [
+    {
+      variant: 'secondary',
+      title: 'Export CSV',
+      onClick: () => exportToExcel(data, 'custom-table Users')
+    },
+    {
+      variant: 'secondary',
+      title: 'Check In Users',
+      onClick: () => setCheckInModal(true),
+      disabled: !rows.length
+    },
+    { title: 'Check Out Users', onClick: () => setCheckOutModal(true), disabled: !rows.length }
+  ];
 
   return (
     <div className="on-site">
@@ -193,58 +147,7 @@ function OnSiteUsers() {
         <Heading>On-Site Users</Heading>
       </div>
       <div>
-        <div className="on-site__filters">
-          <div className="on-site__filters-search-wrapper">
-            <Input
-              className="on-site__filters-search"
-              placeholder={`Search On-Site ${placeholderText}...`}
-              suffix={<Search />}
-              onChange={handleSearch}
-            />
-            <Select
-              value={selectedFilter}
-              className="on-site__filters-select"
-              dropdownClassName="custom-select__dropdown"
-              onChange={(selected) => {
-                setSelectedFilter(selected);
-              }}>
-              {/* <Option value="company">Filter By : Company</Option> */}
-              <Option value="date">Filter By : Date</Option>
-              <Option value="user">Filter By : User</Option>
-            </Select>
-          </div>
-          <div className="on-site__filters-buttons">
-            <Button
-              variant="secondary"
-              onClick={() => {
-                exportToExcel(data, 'On-Site Users');
-              }}>
-              Export CSV
-            </Button>
-            <Button
-              variant="secondary"
-              disabled={!rows.length}
-              onClick={() => {
-                setCheckInModal(true);
-              }}>
-              Check In Users
-            </Button>
-            <Button
-              disabled={!rows.length}
-              onClick={() => {
-                setCheckOutModal(true);
-              }}>
-              Check Out Users
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Table
-          columns={columns}
-          data={filteredData.length ? filteredData : data}
-          rowSelection={rowSelection}
-        />
+        <Table columns={columns} data={data} rowSelection={rowSelection} buttons={buttons} />
       </div>
     </div>
   );

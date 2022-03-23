@@ -1,13 +1,11 @@
 // import { useTranslation } from 'react-i18next';
-import { Input, Select, Space } from 'antd';
+import { useRef, useState } from 'react';
+import { Space } from 'antd';
 import * as XLSX from 'xlsx';
 import { Button, Heading, Table, Modal } from 'components';
-import { Document, Search, Trash } from 'icons';
+import { Document, Trash } from 'icons';
 import { exportToExcel, processData } from 'utils';
-import { useEffect, useRef, useState } from 'react';
 import './AllUsers.styles.scss';
-
-const { Option } = Select;
 
 // Columns for table
 const tableCol = [
@@ -66,11 +64,21 @@ const tableCol = [
   }
 ];
 
+const data = [];
+for (let i = 0; i < 50; i += 1) {
+  data.push({
+    key: i,
+    uid: Number(`0${i}54${i}`),
+    name: `Paul Elliott ${i}`,
+    company: `Mind 2 Matter ${i}`,
+    status: i % 2 === 0 ? 'Currently Enabled' : 'Disabled',
+    check_ins: `${i} Check Ins Total`,
+    check_outs: `${i} Check Ins Total`
+  });
+}
+
 function AllUsers() {
   const [modal, setModal] = useState(false);
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState('user');
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -95,74 +103,15 @@ function AllUsers() {
 
   const inputFile = useRef(null);
 
-  // Setting data for table
-  useEffect(() => {
-    // Data for table
-    const dataHolder = [];
-    for (let i = 0; i < 50; i += 1) {
-      dataHolder.push({
-        key: i,
-        uid: Number(`0${i}54${i}`),
-        name: `Paul Elliott ${i}`,
-        company: `Mind 2 Matter ${i}`,
-        status: i % 2 === 0 ? 'Currently Enabled' : 'Disabled',
-        check_ins: `${i} Check Ins Total`,
-        check_outs: `${i} Check Ins Total`
-      });
-    }
-    setData(dataHolder);
-  }, []);
-
-  // Filter Data
-  const handleSearch = (e) => {
-    if (e.target.value) {
-      if (selectedFilter === 'user') {
-        const newData = data.filter((item) => {
-          return item?.name.indexOf(e.target.value) !== -1;
-        });
-        if (newData.length) {
-          setFilteredData(newData);
-        } else {
-          setFilteredData([
-            {
-              key: 'Not Found',
-              uid: 'Not Found',
-              name: 'Not Found',
-              company: 'Not Found',
-              status: 'Not Found',
-              check_ins: 'Not Found',
-              check_outs: 'Not Found'
-            }
-          ]);
-        }
-      } else if (selectedFilter === 'company') {
-        const newData = data.filter((item) => {
-          return item?.company.includes(e.target.value);
-        });
-        setFilteredData(newData);
-      } else if (selectedFilter === 'date') {
-        const newData = data.filter((item) => {
-          return item?.check_ins.indexOf(e.target.value) !== -1;
-        });
-        if (newData.length) {
-          setFilteredData(newData);
-        } else {
-          setFilteredData('Not Found');
-        }
-      }
-    } else {
-      setFilteredData('');
-    }
-  };
-
-  let placeholderText;
-  if (selectedFilter === 'user') {
-    placeholderText = 'Users';
-  } else if (selectedFilter === 'company') {
-    placeholderText = 'Users by Companies';
-  } else if (selectedFilter === 'date') {
-    placeholderText = 'Users by Date';
-  }
+  const buttons = [
+    { onClick: () => inputFile.current.click(), title: 'Import CSV', variant: 'secondary' },
+    {
+      onClick: () => exportToExcel(data, 'all-users Users'),
+      title: 'Export CSV',
+      variant: 'secondary'
+    },
+    { title: 'Addd New User', onClick: () => setModal(true) }
+  ];
 
   return (
     <div className="all-users">
@@ -208,61 +157,16 @@ function AllUsers() {
       />
       <div>
         <Heading>All Users</Heading>
+        <input
+          type="file"
+          id="file"
+          ref={inputFile}
+          style={{ display: 'none' }}
+          onChange={handleFileUpload}
+        />
       </div>
       <div>
-        <div className="all-users__filters">
-          <div className="all-users__filters-search-wrapper">
-            <Input
-              className="all-users__filters-search"
-              placeholder={`Search All ${placeholderText}...`}
-              suffix={<Search />}
-              onChange={handleSearch}
-            />
-            <Select
-              value={selectedFilter}
-              className="all-users__filters-select"
-              dropdownClassName="custom-select__dropdown"
-              onChange={(selected) => {
-                setSelectedFilter(selected);
-              }}>
-              <Option value="company">Filter By : Company</Option>
-              <Option value="date">Filter By : Date</Option>
-              <Option value="user">Filter By : User</Option>
-            </Select>
-          </div>
-          <div className="all-users__filters-buttons">
-            <input
-              type="file"
-              id="file"
-              ref={inputFile}
-              style={{ display: 'none' }}
-              onChange={handleFileUpload}
-            />
-            <Button
-              variant="secondary"
-              onClick={() => {
-                inputFile.current.click();
-              }}>
-              Import CSV
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                exportToExcel(data, 'all-users Users');
-              }}>
-              Export CSV
-            </Button>
-            <Button
-              onClick={() => {
-                setModal(true);
-              }}>
-              Add New User
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Table columns={tableCol} data={filteredData.length ? filteredData : data} />
+        <Table columns={tableCol} data={data} buttons={buttons} />
       </div>
     </div>
   );
