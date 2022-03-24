@@ -1,13 +1,13 @@
 import { Input, ColorInput, UploadLogo, Button } from 'components';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPrimaryColor, setSecondaryColor } from 'store';
 import './AppSettings.styles.scss';
 
 const initialValues = {
   defaultAppName: 'Mind 2 Matter',
-  logo: '/img/logo-blue.png',
-  primaryColor: '#096DD9',
-  secondaryColor: '#13C2C2'
+  logo: '/img/logo-blue.png'
 };
 
 const validationSchema = Yup.object().shape({
@@ -18,11 +18,25 @@ const validationSchema = Yup.object().shape({
 });
 
 export function AppSettings() {
+  const { primaryColor, secondaryColor } = useSelector((state) => state.theme);
+
+  const dispatch = useDispatch();
   return (
     <div className="app-settings">
       <h2 className="app-settings__heading">App Settings</h2>
 
-      <Formik initialValues={initialValues} validationSchema={validationSchema}>
+      <Formik
+        enableReinitialize
+        initialValues={{
+          primaryColor,
+          secondaryColor,
+          ...initialValues
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          dispatch(setPrimaryColor(values.primaryColor));
+          dispatch(setSecondaryColor(values.secondaryColor));
+        }}>
         {({ touched, errors }) => {
           return (
             <Form className="app-settings__form">
