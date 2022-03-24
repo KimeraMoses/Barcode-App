@@ -22,7 +22,7 @@ function AllUsers() {
       title: 'Export CSV',
       variant: 'secondary'
     },
-    { title: 'Addd New User', onClick: () => setModal(true) }
+    { title: 'Add New User', onClick: () => setModal(true) }
   ];
 
   const onEditClick = (userData) => {
