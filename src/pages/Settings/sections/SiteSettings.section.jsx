@@ -1,13 +1,13 @@
 import { Input, ColorInput, UploadLogo, Button } from 'components';
 import { Form, Formik } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPrimaryColor, setSecondaryColor } from 'store';
 import * as Yup from 'yup';
 import './SiteSettings.styles.scss';
 
 const initialValues = {
   siteTitle: 'Barcode App',
-  logo: '/img/logo-blue.png',
-  primaryColor: '#096DD9',
-  secondaryColor: '#13C2C2'
+  logo: '/img/logo-blue.png'
 };
 
 const validationSchema = Yup.object().shape({
@@ -18,11 +18,20 @@ const validationSchema = Yup.object().shape({
 });
 
 export function SiteSettings() {
+  const { primaryColor, secondaryColor } = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
   return (
     <div className="site-settings">
       <h2 className="site-settings__heading">Site Settings</h2>
 
-      <Formik initialValues={initialValues} validationSchema={validationSchema}>
+      <Formik
+        enableReinitialize
+        initialValues={{ primaryColor, secondaryColor, ...initialValues }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          dispatch(setPrimaryColor(values.primaryColor));
+          dispatch(setSecondaryColor(values.secondaryColor));
+        }}>
         {({ touched, errors }) => {
           return (
             <Form className="site-settings__form">
