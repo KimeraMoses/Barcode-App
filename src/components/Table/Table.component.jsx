@@ -1,7 +1,7 @@
 import { Input, Select, Table as AntdTable } from 'antd';
 import { Button } from 'components';
 import { ArrowLeft, ArrowRight, Search } from 'icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Table.styles.scss';
 
 const { Option } = Select;
@@ -28,15 +28,18 @@ function itemRender(current, type, originalElement) {
 export function Table({ data, columns, rowSelection, buttons }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-  const handleSearch = (e) => {
-    if (e.target.value) {
+  useEffect(() => {
+    if (searchText) {
+      setSearchText(searchText);
+      const search = searchText.toLowerCase();
       const newData = data.filter((item) => {
         const value =
           typeof item[selectedFilter] === 'number'
-            ? item[selectedFilter].toString()
-            : item[selectedFilter];
-        return value.indexOf(e.target.value) !== -1;
+            ? item[selectedFilter].toString().toLowerCase()
+            : item[selectedFilter].toLowerCase();
+        return value.indexOf(search) !== -1;
       });
       if (newData.length) {
         setFilteredData(newData);
@@ -55,6 +58,10 @@ export function Table({ data, columns, rowSelection, buttons }) {
     } else {
       setFilteredData([]);
     }
+  }, [searchText, selectedFilter]);
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
   };
 
   return (
@@ -96,28 +103,6 @@ export function Table({ data, columns, rowSelection, buttons }) {
                 </Button>
               );
             })}
-            {/* <Button
-              variant="secondary"
-              onClick={() => {
-                //
-              }}>
-              Export CSV
-            </Button>
-            <Button
-              variant="secondary"
-              // disabled={!rows.length}
-              onClick={() => {
-                // ;
-              }}>
-              Check In Users
-            </Button>
-            <Button
-              // disabled={!rows.length}
-              onClick={() => {
-                // ;
-              }}>
-              Check Out Users
-            </Button> */}
           </div>
         </div>
       </div>
