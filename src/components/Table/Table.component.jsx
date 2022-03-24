@@ -25,7 +25,7 @@ function itemRender(current, type, originalElement) {
   return originalElement;
 }
 
-export function Table({ data, columns, rowSelection, buttons }) {
+export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -114,7 +114,7 @@ export function Table({ data, columns, rowSelection, buttons }) {
         className="custom-table__el"
         showSorterTooltip={false}
         pagination={{
-          pageSize: 5,
+          pageSize,
           itemRender,
           showTotal: (total, range) => `Showing ${range[0]}-${range[1]} of ${total} Records`
         }}

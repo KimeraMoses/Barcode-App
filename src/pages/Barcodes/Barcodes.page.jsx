@@ -88,7 +88,13 @@ function Barcodes() {
         <Heading>Barcodes</Heading>
       </div>
       <div>
-        <Table columns={columns} data={data} buttons={buttons} rowSelection={rowSelection} />
+        <Table
+          columns={columns}
+          data={data}
+          buttons={buttons}
+          rowSelection={rowSelection}
+          pageSize={16}
+        />
         <PrintArea ref={printAreaRef} rows={rows} />
       </div>
     </div>
