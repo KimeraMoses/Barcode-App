@@ -3,7 +3,6 @@ import { Drawer, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { useHover } from 'hooks';
 import './Navbar.styles.scss';
 
 const links = [
