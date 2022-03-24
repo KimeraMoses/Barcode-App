@@ -59,9 +59,14 @@ export function Navbar() {
           })}
         </div>
         <div className="navbar__links-right">
-          <div className="navbar__links-right-lc">Live Count : 100</div>
+          <div className="navbar__links-right-lc" style={{ color: primaryColor }}>
+            Live Count : 100
+          </div>
           <Link to="/" className="navbar__links-right-btn">
-            <Button type="primary" size="small">
+            <Button
+              type="primary"
+              size="small"
+              style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}>
               Sign Out
             </Button>
           </Link>
@@ -69,7 +74,13 @@ export function Navbar() {
       </div>
 
       <div className="navbar__hamburger">
-        <Button type="primary" size="small" onClick={showDrawer} icon={<MenuOutlined />} />
+        <Button
+          type="primary"
+          size="small"
+          style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}
+          onClick={showDrawer}
+          icon={<MenuOutlined />}
+        />
         <Drawer
           title="Menu"
           placement="right"
@@ -85,14 +96,22 @@ export function Navbar() {
                 onClick={onClose}
                 className={`navbar__links-container-el ${
                   pathname === link.path ? 'navbar__links-container-el-active' : ''
-                }`}>
+                }`}
+                style={linkHovered === link.path || pathname === link.path ? linkHoverStyles : {}}
+                onMouseEnter={() => toggleHover(link)}
+                onMouseLeave={() => setLinkHovered(false)}>
                 {link?.text}
               </Link>
             ))}
             <div className="navbar__drawer-links-right">
-              <div className="navbar__drawer-links-right-lc">Live Count : 100</div>
+              <div className="navbar__drawer-links-right-lc" style={{ color: primaryColor }}>
+                Live Count : 100
+              </div>
               <Link to="/" className="navbar__drawer-links-right-btn">
-                <Button type="primary" size="small">
+                <Button
+                  type="primary"
+                  size="small"
+                  style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}>
                   Sign Out
                 </Button>
               </Link>
