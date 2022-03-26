@@ -6,16 +6,16 @@
   align-items: center;
   border-bottom: 1px solid #e8e8e8;
   padding: 20px;
-  @include moreThanMobile {
-    padding: 20px 40px;
+  @include moreThanMobile() {
+    padding: 45px 50px;
   }
-  @include moreThanTablet {
+  @include moreThanDesktop1600() {
     padding: 45px 140px;
   }
 
   .navbar__hamburger {
     display: block;
-    @include moreThanDesktop1600 {
+    @include moreThanTablet() {
       display: none;
     }
   }
@@ -36,25 +36,34 @@
 
   .navbar__links {
     display: none;
-    @include moreThanDesktop1600 {
+    align-items: center;
+    @include moreThanTablet() {
       display: flex;
     }
-    align-items: center;
-    gap: 140px;
+    gap: 40px;
+    @include moreThanDesktop1440() {
+      gap: 140px;
+    }
 
     &-container {
       display: flex;
-      gap: 24px;
       align-items: center;
+      gap: 10px;
+      @include moreThanDesktop1440() {
+        gap: 24px;
+      }
       &-el {
         color: #8c8c8c;
         font-weight: 500;
         line-height: 16px;
         text-decoration: none;
-        padding: 12px 24px;
         border: 1px solid rgba(0, 0, 0, 0);
         border-radius: 12px;
         transition: all 0.2s ease-in;
+        padding: 12px;
+        @include moreThanDesktop1440() {
+          padding: 12px 24px;
+        }
         &:active,
         &:visited {
           color: #8c8c8c;

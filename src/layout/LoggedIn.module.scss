@@ -2,7 +2,10 @@
 
 .loggedIn {
   padding: 0px 20px;
-  @include moreThanDesktop() {
+  @include moreThanTablet() {
+    padding: 0px 50px;
+  }
+  @include moreThanDesktop1600() {
     padding: 0px 140px;
   }
 }

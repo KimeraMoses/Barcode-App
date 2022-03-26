@@ -77,9 +77,15 @@
       gap: 20px;
       flex-direction: column;
       width: 100%;
+      margin-bottom: 0px;
+      @include moreThanTablet() {
+        flex-direction: row;
+        margin-bottom: 20px;
+      }
       @include moreThanDesktop() {
         flex-direction: row;
         width: auto;
+        margin-bottom: 0px;
       }
     }
     // Input Styles
@@ -88,6 +94,9 @@
       border-radius: 12px;
       border: 1px solid #e8e8e8;
       width: 100%;
+      @include moreThanTablet() {
+        width: 50%;
+      }
       @include moreThanDesktop() {
         min-width: 398px;
       }
@@ -108,9 +117,12 @@
       appearance: none;
       width: 100%;
       margin-bottom: 20px;
-      @include moreThanDesktop {
-        min-width: 260px;
+      @include moreThanTablet() {
+        width: 50%;
         margin-bottom: 0px;
+      }
+      @include moreThanDesktop() {
+        min-width: 260px;
       }
       .ant-select-selector {
         border-radius: 12px;
@@ -126,9 +138,11 @@
       display: flex;
       align-items: center;
       gap: 20px;
-
       flex-direction: column;
       width: 100%;
+      @include moreThanTablet() {
+        flex-direction: row;
+      }
       @include moreThanDesktop() {
         flex-direction: row;
         width: auto;
