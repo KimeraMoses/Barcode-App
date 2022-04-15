@@ -62,7 +62,6 @@ export const authSlice = createSlice({
       state.status = payload.status;
     },
     logout(state) {
-      console.log("Log out clicked");
       state.user = {};
       state.token = null;
       state.isLoggedIn = false;

@@ -43,11 +43,9 @@ export const fetchAllUserEvents = (authToken) => {
         }
       );
       const res = await response.json();
-      console.log("Events", res);
       dispatch(fetchEventsSuccess(res.data));
     } catch (error) {
       dispatch(fetchEventsFail(error));
-      // console.log(error);
     }
   };
 };
@@ -142,15 +140,6 @@ export const editAdminDetails =
   ) =>
   async (dispatch) => {
     dispatch(editUserPending());
-    console.log(
-      userId,
-      authToken,
-      full_name,
-      username,
-      email,
-      status,
-      timezone
-    );
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/admin/${userId}`,
