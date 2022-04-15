@@ -1,8 +1,15 @@
-import { Switch as AntdSwitch } from 'antd';
-import { Field } from 'formik';
-import './Switch.styles.scss';
+import { Switch as AntdSwitch } from "antd";
+import { Field } from "formik";
+import "./Switch.styles.scss";
 
-export function Switch({ name, placeholder, customClass, errors, touched, onChange }) {
+export function Switch({
+  name,
+  placeholder,
+  customClass,
+  errors,
+  touched,
+  onChange,
+}) {
   const invalid = errors?.[name] && touched?.[name];
   return (
     <div>
@@ -13,8 +20,9 @@ export function Switch({ name, placeholder, customClass, errors, touched, onChan
           name={name}
           type="checkbox"
           className={`custom-switch__el ${
-            invalid ? 'custom-switch__el-invalid' : ''
-          } ${customClass}`}>
+            invalid ? "custom-switch__el-invalid" : ""
+          } ${customClass}`}
+        >
           {({ field: { value }, form: { setFieldValue, setFieldTouched } }) => {
             return (
               <AntdSwitch
@@ -29,7 +37,7 @@ export function Switch({ name, placeholder, customClass, errors, touched, onChan
           }}
         </Field>
       </div>
-      <div className="custom-switch__error">{errors[name] || 'Error'}</div>
+      <div className="custom-switch__error">{errors[name] || "Error"}</div>
     </div>
   );
 }

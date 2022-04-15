@@ -1,19 +1,23 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Drawer, Button } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import './Navbar.styles.scss';
+import { Link, useLocation } from "react-router-dom";
+import { Drawer, Button } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import "./Navbar.styles.scss";
+import { useNavigate } from "react-router-dom";
+import { logout } from "store/Slices/authSlice";
 
 const links = [
-  { path: '/dashboard/onsite-users', text: 'On-Site Users' },
-  { path: '/dashboard/all-users', text: 'All Users' },
-  { path: '/dashboard/check-in', text: 'Check-Ins & Check-Outs' },
-  { path: '/dashboard/barcodes', text: 'Barcodes' },
-  { path: '/dashboard/settings', text: 'Settings' }
+  { path: "/dashboard/onsite-users", text: "On-Site Users" },
+  { path: "/dashboard/all-users", text: "All Users" },
+  { path: "/dashboard/all-admins", text: "All Admins" },
+  { path: "/dashboard/check-in", text: "Check-Ins & Check-Outs" },
+  { path: "/dashboard/barcodes", text: "Barcodes" },
+  { path: "/dashboard/settings", text: "Settings" },
 ];
 
 export function Navbar() {
+  const liveCount = useSelector((state) => state.users.liveCount);
   const [visible, setVisible] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
 
@@ -25,13 +29,20 @@ export function Navbar() {
   const onClose = () => {
     setVisible(false);
   };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  //====LOGOUT HANDLER====
+  const LogoutHandler = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   const { pathname } = useLocation();
   const { primaryColor } = useSelector((state) => state.theme);
 
   const linkHoverStyles = {
     color: primaryColor,
-    border: `1px solid ${primaryColor}`
+    border: `1px solid ${primaryColor}`,
   };
 
   return (
@@ -48,28 +59,41 @@ export function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`navbar__links-container-el ${
-                  pathname === link.path ? 'navbar__links-container-el-active' : ''
+                  pathname === link.path
+                    ? "navbar__links-container-el-active"
+                    : ""
                 }`}
-                style={linkHovered === link.path || pathname === link.path ? linkHoverStyles : {}}
+                style={
+                  linkHovered === link.path || pathname === link.path
+                    ? linkHoverStyles
+                    : {}
+                }
                 onMouseEnter={() => toggleHover(link)}
-                onMouseLeave={() => setLinkHovered(false)}>
+                onMouseLeave={() => setLinkHovered(false)}
+              >
                 {link?.text}
               </Link>
             );
           })}
         </div>
         <div className="navbar__links-right">
-          <div className="navbar__links-right-lc" style={{ color: primaryColor }}>
-            Live Count : 100
+          <div
+            className="navbar__links-right-lc"
+            style={{ color: primaryColor }}
+          >
+            Live Count : {liveCount}
           </div>
-          <Link to="/" className="navbar__links-right-btn">
-            <Button
-              type="primary"
-              size="small"
-              style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}>
-              Sign Out
-            </Button>
-          </Link>
+          <Button
+            type="primary"
+            size="small"
+            onClick={LogoutHandler}
+            style={{
+              background: primaryColor,
+              border: `1px solid ${primaryColor}`,
+            }}
+          >
+            Sign Out
+          </Button>
         </div>
       </div>
 
@@ -77,7 +101,10 @@ export function Navbar() {
         <Button
           type="primary"
           size="small"
-          style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}
+          style={{
+            background: primaryColor,
+            border: `1px solid ${primaryColor}`,
+          }}
           onClick={showDrawer}
           icon={<MenuOutlined />}
         />
@@ -87,7 +114,8 @@ export function Navbar() {
           onClose={onClose}
           visible={visible}
           width="100%"
-          className="navbar__drawer">
+          className="navbar__drawer"
+        >
           <div className="navbar__drawer-links">
             {links.map((link) => (
               <Link
@@ -95,26 +123,39 @@ export function Navbar() {
                 to={link.path}
                 onClick={onClose}
                 className={`navbar__links-container-el ${
-                  pathname === link.path ? 'navbar__links-container-el-active' : ''
+                  pathname === link.path
+                    ? "navbar__links-container-el-active"
+                    : ""
                 }`}
-                style={linkHovered === link.path || pathname === link.path ? linkHoverStyles : {}}
+                style={
+                  linkHovered === link.path || pathname === link.path
+                    ? linkHoverStyles
+                    : {}
+                }
                 onMouseEnter={() => toggleHover(link)}
-                onMouseLeave={() => setLinkHovered(false)}>
+                onMouseLeave={() => setLinkHovered(false)}
+              >
                 {link?.text}
               </Link>
             ))}
             <div className="navbar__drawer-links-right">
-              <div className="navbar__drawer-links-right-lc" style={{ color: primaryColor }}>
+              <div
+                className="navbar__drawer-links-right-lc"
+                style={{ color: primaryColor }}
+              >
                 Live Count : 100
               </div>
-              <Link to="/" className="navbar__drawer-links-right-btn">
-                <Button
-                  type="primary"
-                  size="small"
-                  style={{ background: primaryColor, border: `1px solid ${primaryColor}` }}>
-                  Sign Out
-                </Button>
-              </Link>
+              <Button
+                onClick={LogoutHandler}
+                type="primary"
+                size="small"
+                style={{
+                  background: primaryColor,
+                  border: `1px solid ${primaryColor}`,
+                }}
+              >
+                Sign Out
+              </Button>
             </div>
           </div>
         </Drawer>

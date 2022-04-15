@@ -1,17 +1,73 @@
-import { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-import { LoggedInLayout } from 'layout';
-import './lang/i18n';
-import Login from 'pages/Login/Login.page';
+import { Suspense, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { LoggedInLayout } from "layout";
+import "react-toastify/dist/ReactToastify.css";
+import "./lang/i18n";
+import Login from "pages/Login/Login.page";
+import { useDispatch, useSelector } from "react-redux";
+import { AutoAuthenticate } from "store/Actions/authActions";
+import {
+  fetchAppSiteSetting,
+  fetchWebSiteSetting,
+} from "store/Actions/siteSettingActions";
+import ForgotPassword from "pages/Password/ForgotPassword.page";
+import ResetPassword from "pages/Password/ResetPassword.page";
 
 function App() {
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    AutoAuthenticate(dispatch);
+    dispatch(fetchWebSiteSetting());
+    dispatch(fetchAppSiteSetting());
+  }, [dispatch]);
+
   return (
     <Suspense fallback={<>Loading...</>}>
+      <ToastContainer />
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard/*" element={<LoggedInLayout />} />
+          <Route
+            path="/"
+            element={
+              !isAuthenticated ? (
+                <Login />
+              ) : (
+                <Navigate to="/dashboard/onsite-users" />
+              )
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              !isAuthenticated ? (
+                <ForgotPassword />
+              ) : (
+                <Navigate to="/dashboard/onsite-users" />
+              )
+            }
+          />
+          <Route
+            path="/reset-password/:resetToken"
+            element={
+              !isAuthenticated ? (
+                <ResetPassword />
+              ) : (
+                <Navigate to="/dashboard/onsite-users" />
+              )
+            }
+          />
+          <Route
+            path="/dashboard/*"
+            element={isAuthenticated ? <LoggedInLayout /> : <Navigate to="/" />}
+          />
         </Routes>
       </Router>
     </Suspense>

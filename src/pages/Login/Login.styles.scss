@@ -5,6 +5,14 @@
   align-items: center;
   justify-content: center;
   background: #fafafa 0% 0% no-repeat padding-box;
+  &__forgot-password-link {
+    text-align: right;
+    margin-top: -40px;
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
 
   // background: #fafafa 0% 0% no-repeat padding-box;
   &__card {
@@ -55,8 +63,8 @@
 
       &-btn {
         margin-top: 16px;
-        width: 36%;
-        height: 70px;
+        width: 50%;
+        // height: 70px;
         font-weight: 500;
         font-size: 16px;
       }

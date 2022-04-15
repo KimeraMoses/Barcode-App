@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  primaryColor: '#096DD9',
-  secondaryColor: '#13C2C2'
+  primaryColor: "#096DD9",
+  secondaryColor: "#13C2C2",
 };
 
 const themeSlice = createSlice({
-  name: 'theme',
+  name: "theme",
   initialState,
   reducers: {
     setPrimaryColor: (state, { payload }) => {
@@ -14,8 +14,8 @@ const themeSlice = createSlice({
     },
     setSecondaryColor: (state, { payload }) => {
       state.secondaryColor = payload;
-    }
-  }
+    },
+  },
 });
 
 const { reducer, actions } = themeSlice;

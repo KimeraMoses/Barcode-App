@@ -1,21 +1,21 @@
-import { Input, Select, Table as AntdTable } from 'antd';
-import { Button } from 'components';
-import { ArrowLeft, ArrowRight, Search } from 'icons';
-import { useEffect, useState } from 'react';
-import './Table.styles.scss';
+import { Input, Select, Table as AntdTable } from "antd";
+import { Button } from "components";
+import { ArrowLeft, ArrowRight, Search } from "icons";
+import { useEffect, useState } from "react";
+import "./Table.styles.scss";
 
 const { Option } = Select;
 
 // Pagination Items
 function itemRender(current, type, originalElement) {
-  if (type === 'prev') {
+  if (type === "prev") {
     return (
       <div>
         <ArrowLeft />
       </div>
     );
   }
-  if (type === 'next') {
+  if (type === "next") {
     return (
       <div>
         <ArrowRight />
@@ -28,7 +28,7 @@ function itemRender(current, type, originalElement) {
 export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [filteredData, setFilteredData] = useState([]);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     if (searchText) {
@@ -36,7 +36,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
       const search = searchText.toLowerCase();
       const newData = data.filter((item) => {
         const value =
-          typeof item[selectedFilter] === 'number'
+          typeof item[selectedFilter] === "number"
             ? item[selectedFilter].toString().toLowerCase()
             : item[selectedFilter].toLowerCase();
         return value.indexOf(search) !== -1;
@@ -46,19 +46,19 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
       } else {
         setFilteredData([
           {
-            key: 'Not Found',
-            uid: 'Not Found',
-            name: 'Not Found',
-            status: 'Not Found',
-            last_check_in: 'Not Found',
-            last_check_out: 'Not Found'
-          }
+            key: "Not Found",
+            uid: "Not Found",
+            name: "Not Found",
+            status: "Not Found",
+            last_check_in: "Not Found",
+            last_check_out: "Not Found",
+          },
         ]);
       }
     } else {
       setFilteredData([]);
     }
-  }, [searchText, selectedFilter]);
+  }, [searchText, selectedFilter, data]);
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
@@ -81,7 +81,8 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
               dropdownClassName="custom-select__dropdown"
               onChange={(selected) => {
                 setSelectedFilter(selected);
-              }}>
+              }}
+            >
               {columns?.map((col) => {
                 return (
                   <Option key={col?.dataIndex} value={col?.dataIndex}>
@@ -98,7 +99,8 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
                   key={btn?.title}
                   variant={btn?.variant}
                   onClick={btn?.onClick}
-                  disabled={btn?.disabled}>
+                  disabled={btn?.disabled}
+                >
                   {btn?.title}
                 </Button>
               );
@@ -116,7 +118,8 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
         pagination={{
           pageSize,
           itemRender,
-          showTotal: (total, range) => `Showing ${range[0]}-${range[1]} of ${total} Records`
+          showTotal: (total, range) =>
+            `Showing ${range[0]}-${range[1]} of ${total} Records`,
         }}
         scroll={{ x: true }}
       />

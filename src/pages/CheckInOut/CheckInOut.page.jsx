@@ -1,64 +1,83 @@
 // import { useTranslation } from 'react-i18next';
-import { Heading, Table } from 'components';
-import { exportToExcel } from 'utils';
-import './CheckInOut.styles.scss';
+import { Heading, Table } from "components";
+import { useEffect } from "react";
+import { exportToExcel } from "utils";
+import "./CheckInOut.styles.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllUserEvents } from "store/Actions/userActions";
+import { dateFormat, isValidDate } from "pages/OnSiteUsers/OnSiteUsers.page";
 
 // Columns for table
 const columns = [
   {
-    title: 'USER ID',
-    dataIndex: 'uid',
-    sorter: (a, b) => a.uid - b.uid
+    title: "USER ID",
+    dataIndex: "uid",
+    sorter: (a, b) => a.uid - b.uid,
   },
   {
-    title: 'NAME',
-    dataIndex: 'name',
-    sorter: (a, b) => a.name.length - b.name.length
+    title: "NAME",
+    dataIndex: "name",
+    width: 300,
+    sorter: (a, b) => a.name.length - b.name.length,
   },
   {
-    title: 'EVENT',
-    dataIndex: 'event',
+    title: "EVENT",
+    dataIndex: "event",
     width: 900,
     render: (text) => (
       <div
         className={`check-in-out__status ${
-          text === 'Checked Out' ? 'check-in-out__status-disabled' : ''
-        }`}>
+          text === "Checked Out" ? "check-in-out__status-disabled" : ""
+        }`}
+      >
         {text}
       </div>
     ),
-    sorter: (a, b) => a.status.length - b.status.length
+    sorter: (a, b) => a.status.length - b.status.length,
   },
   {
-    title: 'Date',
-    dataIndex: 'last_check_out',
-    width: 250,
-    sorter: (a, b) => a.last_check_out - b.last_check_out
-  }
+    title: "Date",
+    dataIndex: "last_check_out",
+    width: 300,
+    sorter: (a, b) => a.last_check_out - b.last_check_out,
+  },
 ];
 
-const data = [];
-for (let i = 0; i < 50; i += 1) {
-  data.push({
-    key: i,
-    uid: Number(`0${i}54${i}`),
-    name: `Paul Elliott ${i}`,
-    event: i % 2 === 0 ? 'Checked In' : 'Checked Out',
-    last_check_in: `Mar 5th, 2022 at 01:00:${i} PM`,
-    last_check_out: 'Mar 5th, 2022 at 01:00:00 PM'
-  });
-}
-
 function CheckIn() {
-  // const { t } = useTranslation();
+  const authToken = useSelector((state) => state.auth.token);
+  const userEvents = useSelector((state) => state.users.userEvents);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllUserEvents(authToken));
+  }, [authToken, dispatch]);
+
+  let data = [];
+
+  userEvents &&
+    userEvents.forEach((event) => {
+      if (event.user_id) {
+        const last_check_out_date = new Date(event.updated);
+        data.push({
+          key: event.id,
+          uid: event.id,
+          name: event.user_id.full_name,
+          event: event.type === "checkIn" ? "Checked In" : "Checked Out",
+          last_check_out: isValidDate(last_check_out_date)
+            ? last_check_out_date.toLocaleTimeString("en-Us", {
+                ...dateFormat,
+              })
+            : "No Date Found",
+        });
+      }
+    });
 
   // Buttons for Table
   const buttons = [
     {
-      variant: 'secondary',
-      title: 'Export CSV',
-      onClick: () => exportToExcel(data, 'custom-table Users')
-    }
+      variant: "secondary",
+      title: "Export CSV",
+      onClick: () => exportToExcel(data, "custom-table Users"),
+    },
   ];
 
   return (

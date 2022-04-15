@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import "../../styles/mixins";
 
 .modal {
   display: none;
@@ -7,6 +7,7 @@
   display: unset;
   min-height: 100vh;
   position: fixed;
+  overflow-y: auto;
   top: 0;
   left: 0;
   width: 100%;
@@ -23,6 +24,7 @@
     z-index: 999;
     padding: 32px;
     width: 95%;
+
     @include moreThanMobile() {
       width: 75%;
     }
@@ -31,6 +33,11 @@
     }
     @include moreThanDesktop() {
       width: 536px;
+    }
+    &-overflow {
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
     }
     &-heading {
       font-size: 24px;
