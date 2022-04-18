@@ -135,6 +135,7 @@ export const editAdminDetails =
     username,
     email,
     status,
+    role,
     timezone,
     isLoggedIn
   ) =>
@@ -150,6 +151,7 @@ export const editAdminDetails =
             username,
             email,
             status,
+            role,
             timezone,
           }),
           headers: new Headers({
@@ -204,7 +206,7 @@ export const createNewUser =
   };
 
 export const createNewAdmin =
-  (authToken, full_name, username, password, email, status, timezone) =>
+  (authToken, full_name, username, password, email, status, role, timezone) =>
   async (dispatch) => {
     dispatch(createNewUserPending());
     try {
@@ -218,6 +220,7 @@ export const createNewAdmin =
             email,
             password,
             status,
+            role,
             timezone,
           }),
           headers: new Headers({

@@ -31,7 +31,7 @@ function ForgotPassword() {
           <img src="/img/logo-blue.png" alt="logo" />
         </div>
         {/* Title */}
-        <h1 className="login-page__card-title">Forgot PassWord</h1>
+        <h1 className="login-page__card-title">Forgot Password</h1>
         {/* Description */}
         <p className="login-page__card-description">
           Please enter the your email to reset password

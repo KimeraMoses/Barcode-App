@@ -6,14 +6,6 @@ export const dashboardPages = [
     Component: lazy(() => import("./OnSiteUsers/OnSiteUsers.page")),
   },
   {
-    path: "all-users",
-    Component: lazy(() => import("./AllUsers/AllUsers.page")),
-  },
-  {
-    path: "all-admins",
-    Component: lazy(() => import("./AllUsers/admins/AllAdmin.page")),
-  },
-  {
     path: "check-in",
     Component: lazy(() => import("./CheckInOut/CheckInOut.page")),
   },

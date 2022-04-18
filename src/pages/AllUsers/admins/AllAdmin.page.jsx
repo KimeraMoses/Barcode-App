@@ -32,6 +32,7 @@ function AllAdmins() {
         name: user.full_name,
         username: user.username,
         email: user.email,
+        role: user.role,
         status: user.status === 1 ? "Currently Enabled" : "Disabled",
         timezone: user.timezone,
       });

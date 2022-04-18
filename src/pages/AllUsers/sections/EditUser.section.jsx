@@ -1,4 +1,4 @@
-import { Button, Input, Switch } from "components";
+import { Button, Input, SelectTimeZone, Switch } from "components";
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +43,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
             email: user?.email,
             company: user?.company,
             status: user?.status !== "Disabled" ? true : false,
+            superAdmin: user?.role === "super-admin" ? true : false,
             userName: user?.username,
             timeZone: user?.timezone,
           }}
@@ -52,7 +53,6 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
           }
           onSubmit={async (values, { resetForm }) => {
             setIsLoading(true);
-            console.log(values);
             try {
               await dispatch(
                 isAdmin
@@ -63,6 +63,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                       values.userName,
                       values.email,
                       values.status ? 1 : 0,
+                      values.superAdmin ? "super-admin" : "admin",
                       values.timeZone,
                       false
                     )
@@ -116,13 +117,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                       errors={errors}
                       touched={touched}
                     />
-                    <Input
-                      name="timeZone"
-                      type="text"
-                      placeholder="Timezone"
-                      errors={errors}
-                      touched={touched}
-                    />
+                    <SelectTimeZone name="timeZone" />
                   </>
                 )}
                 {!isAdmin && (
@@ -140,6 +135,14 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                   errors={errors}
                   touched={touched}
                 />
+                {isAdmin && (
+                  <Switch
+                    name="superAdmin"
+                    placeholder="Make Super Admin?"
+                    errors={errors}
+                    touched={touched}
+                  />
+                )}
                 <div className="edit-user__modal-buttons">
                   <Button
                     variant="secondary"

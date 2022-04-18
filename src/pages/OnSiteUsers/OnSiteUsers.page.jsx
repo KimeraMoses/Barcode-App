@@ -79,6 +79,14 @@ function OnSiteUsers() {
     }),
   };
 
+  // const handleUserModal = (e, userId) => {
+  //   setUserValue(e.target.checked);
+  //   setSelectedId(userId);
+  //   console.log(userId);
+  //   console.log(rows);
+  //   Rows.filter((user) => user.key !== selectedId);
+  // };
+
   let data = [];
 
   userList &&
@@ -186,7 +194,7 @@ function OnSiteUsers() {
               <div className="on-site__modal-list">
                 {rows.map((row) => {
                   return (
-                    <div className="on-site__modal-list-el">
+                    <div className="on-site__modal-list-el" key={row.uid}>
                       <div className="on-site__modal-list-el-cn">
                         <input type="checkbox" checked />
                         <div>{row?.name}</div>

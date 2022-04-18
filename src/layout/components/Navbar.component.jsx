@@ -9,6 +9,13 @@ import { logout } from "store/Slices/authSlice";
 
 const links = [
   { path: "/dashboard/onsite-users", text: "On-Site Users" },
+  { path: "/dashboard/check-in", text: "Check-Ins & Check-Outs" },
+  { path: "/dashboard/barcodes", text: "Barcodes" },
+  { path: "/dashboard/settings", text: "Settings" },
+];
+
+const adminLinks = [
+  { path: "/dashboard/onsite-users", text: "On-Site Users" },
   { path: "/dashboard/all-users", text: "All Users" },
   { path: "/dashboard/all-admins", text: "All Admins" },
   { path: "/dashboard/check-in", text: "Check-Ins & Check-Outs" },
@@ -18,6 +25,9 @@ const links = [
 
 export function Navbar() {
   const liveCount = useSelector((state) => state.users.liveCount);
+  const { webSettings } = useSelector((state) => state.settings);
+  const { user } = useSelector((state) => state.auth);
+  const isSupperAdmin = user && user.role === "super-admin" ? true : false;
   const [visible, setVisible] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
 
@@ -44,16 +54,21 @@ export function Navbar() {
     color: primaryColor,
     border: `1px solid ${primaryColor}`,
   };
-
   return (
     <div className="navbar">
-      <div className="navbar__logo" style={{ background: primaryColor }}>
-        <img src="/img/logo.png" alt="logo" />
+      <div className="navbar__logo-wrapper">
+        <div className="navbar__logo" style={{ background: primaryColor }}>
+          {/* <img src={webSettings.site_logo} alt={webSettings.site_name} /> */}
+          <img src="/img/logo.png" alt="logo" />
+        </div>
+        <div className="navbar__site_name">
+          <h4 style={{ color: `${primaryColor}` }}>{webSettings.site_name}</h4>
+        </div>
       </div>
 
       <div className="navbar__links">
         <div className="navbar__links-container">
-          {links.map((link) => {
+          {(isSupperAdmin ? adminLinks : links).map((link) => {
             return (
               <Link
                 key={link.path}

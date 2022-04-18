@@ -1,4 +1,5 @@
 import { Suspense, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -20,7 +21,9 @@ import ForgotPassword from "pages/Password/ForgotPassword.page";
 import ResetPassword from "pages/Password/ResetPassword.page";
 
 function App() {
+  const { webSettings } = useSelector((state) => state.settings);
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,6 +35,9 @@ function App() {
   return (
     <Suspense fallback={<>Loading...</>}>
       <ToastContainer />
+      <Helmet>
+        <title>{`${webSettings && webSettings.site_name}`} | Admin</title>
+      </Helmet>
       <Router>
         <Routes>
           <Route

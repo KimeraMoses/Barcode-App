@@ -44,6 +44,7 @@ export function AdminSettings() {
                 values.userName,
                 values.email,
                 user.status,
+                user.role,
                 values.timeZone,
                 true
               )

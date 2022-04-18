@@ -17,6 +17,7 @@ const initialValues = {
   password: "",
   timeZone: "",
   userName: "",
+  superAdmin: false,
 };
 
 const validationSchema__User = Yup.object().shape({
@@ -58,7 +59,6 @@ export function AddUser({ setModal, isAdmin }) {
         }
         onSubmit={async (values, { resetForm }) => {
           setIsLoading(true);
-          console.log(values);
           try {
             await dispatch(
               isAdmin
@@ -69,6 +69,7 @@ export function AddUser({ setModal, isAdmin }) {
                     values.password,
                     values.email,
                     values.status ? 1 : 0,
+                    values.superAdmin ? "super-admin" : "admin",
                     values.timeZone
                   )
                 : createNewUser(
@@ -148,6 +149,14 @@ export function AddUser({ setModal, isAdmin }) {
               errors={errors}
               touched={touched}
             />
+            {isAdmin && (
+              <Switch
+                name="superAdmin"
+                placeholder="Make Super Admin?"
+                errors={errors}
+                touched={touched}
+              />
+            )}
             {!isAdmin && (
               <Input
                 name="welcomeMsg"
