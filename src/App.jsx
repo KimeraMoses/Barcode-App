@@ -36,7 +36,14 @@ function App() {
     <Suspense fallback={<>Loading...</>}>
       <ToastContainer />
       <Helmet>
-        <title>{`${webSettings && webSettings.site_name}`} | Admin</title>
+        <title>
+          {`${
+            webSettings && webSettings.site_name
+              ? webSettings.site_name
+              : "Loading..."
+          }`}
+          | Admin
+        </title>
       </Helmet>
       <Router>
         <Routes>

@@ -22,7 +22,11 @@ export const PrintArea = forwardRef(({ rows = [] }, ref) => {
                 <ReactBarcode
                   value={row.image}
                   className="barcode"
-                  options={{ displayValue: false, background: "transparent" }}
+                  options={{
+                    displayValue: false,
+                    background: "transparent",
+                    width: 100,
+                  }}
                   displayValue={false}
                   renderer="image"
                 />

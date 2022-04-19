@@ -132,7 +132,7 @@ export function Navbar() {
           className="navbar__drawer"
         >
           <div className="navbar__drawer-links">
-            {links.map((link) => (
+            {(isSupperAdmin ? adminLinks : links).map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -158,7 +158,7 @@ export function Navbar() {
                 className="navbar__drawer-links-right-lc"
                 style={{ color: primaryColor }}
               >
-                Live Count : 100
+                Live Count : {liveCount}
               </div>
               <Button
                 onClick={LogoutHandler}
