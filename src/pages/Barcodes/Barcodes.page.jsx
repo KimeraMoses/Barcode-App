@@ -30,7 +30,6 @@ const columns = [
               background: "transparent",
               height: 50,
             }}
-            displayValue={false}
             renderer="image"
           />
         </div>
@@ -79,7 +78,7 @@ function Barcodes() {
       data.push({
         key: code.id,
         sid: code.id,
-        image: code.id,
+        image: code.uuid,
         name: code.user_id && code.user_id.full_name,
         status:
           code.user_id && code.user_id.status === 1 ? "Confirm" : "Rejected",
