@@ -1,14 +1,14 @@
 @import '../../styles/mixins';
 
 .settings-page {
-  margin-top: 40px;
+  margin-top: 20px;
 
   &__cards {
-    margin-top: 40px;
+    margin-top: 20px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 
     @include moreThanTablet() {
       grid-template-columns: 1fr 1fr;
