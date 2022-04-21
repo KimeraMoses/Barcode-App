@@ -1,24 +1,24 @@
 // import { useTranslation } from 'react-i18next';
-import { Heading, Table } from "components";
-import { useReactToPrint } from "react-to-print";
-import { useState, useRef, useEffect } from "react";
-import ReactBarcode from "react-jsbarcode";
+import { Heading, Table } from 'components';
+import { useReactToPrint } from 'react-to-print';
+import { useState, useRef, useEffect } from 'react';
+import ReactBarcode from 'react-jsbarcode';
 // import { exportToExcel } from 'utils';
-import "./Barcodes.styles.scss";
-import { PrintArea } from "./sections";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBardCodes } from "store/Actions/barCodeActions";
+import './Barcodes.styles.scss';
+import { PrintArea } from './sections';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBardCodes } from 'store/Actions/barCodeActions';
 
 // Columns for table
 const columns = [
   {
-    title: "Scan ID",
-    dataIndex: "sid",
+    title: 'Scan ID',
+    dataIndex: 'sid',
     sorter: (a, b) => a.sid - b.sid,
   },
   {
-    title: "IMAGE",
-    dataIndex: "image",
+    title: 'IMAGE',
+    dataIndex: 'image',
     render: (value) => {
       return (
         <div className="barcodes__image">
@@ -27,8 +27,9 @@ const columns = [
             className="barcode"
             options={{
               displayValue: false,
-              background: "transparent",
-              height: 50,
+              background: 'transparent',
+              height: 45,
+              width: 1,
             }}
             renderer="image"
           />
@@ -37,18 +38,18 @@ const columns = [
     },
   },
   {
-    title: "Name",
-    dataIndex: "name",
+    title: 'Name',
+    dataIndex: 'name',
     width: 900,
     sorter: (a, b) => a.full_name.length - b.full_name.length,
   },
   {
-    title: "Status",
-    dataIndex: "status",
+    title: 'Status',
+    dataIndex: 'status',
     render: (text) => (
       <div
         className={`barcodes__status ${
-          text === "Rejected" ? "barcodes__status-disabled" : ""
+          text === 'Rejected' ? 'barcodes__status-disabled' : ''
         }`}
       >
         {text}
@@ -81,21 +82,21 @@ function Barcodes() {
         image: code.uuid,
         name: code.user_id && code.user_id.full_name,
         status:
-          code.user_id && code.user_id.status === 1 ? "Confirm" : "Rejected",
+          code.user_id && code.user_id.status === 1 ? 'Confirm' : 'Rejected',
       });
     });
 
   // Buttons for Table
   const buttons = [
     {
-      title: "Print Selected",
+      title: 'Print Selected',
       disabled: !rows.length,
       onClick: () => handlePrint(),
     },
   ];
 
   const rowSelection = {
-    type: "checkbox",
+    type: 'checkbox',
     onChange: (selectedRowKeys, selectedRows) => {
       // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       setRows(selectedRows);

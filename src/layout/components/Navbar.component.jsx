@@ -62,7 +62,7 @@ export function Navbar() {
           <img src="/img/logo.png" alt="logo" />
         </div>
         <div className="navbar__site_name">
-          <h4 style={{ color: `${primaryColor}` }}>{webSettings.site_name}</h4>
+          <h4 style={{ color: `#8c8c8c` }}>{webSettings.site_name}</h4>
         </div>
       </div>
 

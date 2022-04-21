@@ -1,6 +1,10 @@
 @import '../../styles/mixins';
 
 .custom-table {
+  // Checkbox radius
+  .ant-checkbox-inner {
+    border-radius: 4px;
+  }
   &__el {
     background: #fff;
     border-radius: 12px;
