@@ -19,6 +19,10 @@
       .ant-table-container table > thead > tr:first-child th:last-child {
         border-top-right-radius: 12px;
       }
+
+      .ant-table-tbody > tr.ant-table-row-selected > td {
+        background: #fafafa;
+      }
     }
     .ant-table-cell {
       padding: 16px 16px;
@@ -147,8 +151,10 @@
         min-width: 398px;
       }
       .ant-input {
+        font-size: 16px;
         &::placeholder {
-          font: normal normal normal 16px/21px Roboto;
+          font-family: Roboto;
+          font-size: 16px;
           letter-spacing: 0px;
           color: #8c8c8c;
         }
@@ -174,6 +180,7 @@
       .ant-select-selector {
         border-radius: 12px;
         background: transparent;
+        padding-left: 20px;
       }
       .ant-select-selection-item {
         font-size: 16px;
