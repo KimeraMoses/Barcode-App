@@ -1,22 +1,22 @@
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { Button, Input } from "components";
-import { Link, useNavigate } from "react-router-dom";
-import "../Login/Login.styles.scss";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { messageNotifications } from "store";
-import { forgotPassword } from "store/Actions/authActions";
-import { useDispatch } from "react-redux";
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { Button, Input } from 'components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { messageNotifications } from 'store';
+import { forgotPassword } from 'store/Actions/authActions';
+import { useDispatch } from 'react-redux';
+import './ForgotPassword.styles.scss';
 
 const initialValues = {
-  email: "",
+  email: '',
 };
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Please enter a valid email.")
-    .required("Email is required!"),
+    .email('Please enter a valid email.')
+    .required('Email is required!'),
 });
 
 function ForgotPassword() {
@@ -24,17 +24,17 @@ function ForgotPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className="login-page">
-      <div className="login-page__card">
+    <div className="password-page">
+      <div className="password-page__card">
         {/* Logo */}
-        <div className="login-page__card-logo">
+        <div className="password-page__card-logo">
           <img src="/img/logo-blue.png" alt="logo" />
         </div>
         {/* Title */}
-        <h1 className="login-page__card-title">Forgot Password</h1>
+        <h1 className="password-page__card-title">Forgot Password</h1>
         {/* Description */}
-        <p className="login-page__card-description">
-          Please enter the your email to reset password
+        <p className="password-page__card-description">
+          Please enter your email to reset password
         </p>
 
         <Formik
@@ -46,24 +46,24 @@ function ForgotPassword() {
               await dispatch(forgotPassword(values.email));
               resetForm();
               toast.success(
-                "Please check your email for a link to reset password",
+                'Please check your email for a link to reset password',
                 {
                   ...messageNotifications,
                 }
               );
               setIsLoading(false);
-              navigate("/");
+              navigate('/');
             } catch (err) {
-              console.log("err", err);
+              console.log('err', err);
               setIsLoading(false);
-              toast.error("Failed to generate password reset link!", {
+              toast.error('Failed to generate password reset link!', {
                 ...messageNotifications,
               });
             }
           }}
         >
           {({ errors, touched }) => (
-            <Form className="login-page__card-form">
+            <Form className="password-page__card-form">
               <Input
                 name="email"
                 type="email"
@@ -71,17 +71,21 @@ function ForgotPassword() {
                 errors={errors}
                 touched={touched}
               />
-              <div className="login-page__forgot-password-link">
-                Have password?<Link to="/"> Login</Link>
-              </div>
 
-              <Button
-                isSubmit
-                customClass="login-page__card-form-btn"
-                disabled={isLoading}
-              >
-                {isLoading ? "Sending Link..." : "Submit"}
-              </Button>
+              <div className="password-page__card-form-buttons">
+                <Button
+                  isSubmit
+                  customClass="password-page__card-form-buttons-btn"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Sending Link...' : 'Submit'}
+                </Button>
+                <Link to="/">
+                  <Button customClass="password-page__card-form-buttons-btn forgot-btn">
+                    Login
+                  </Button>
+                </Link>
+              </div>
             </Form>
           )}
         </Formik>
