@@ -1,17 +1,24 @@
 import { useSelector } from 'react-redux';
 import './Button.styles.scss';
 
-export function Button({ children, isSubmit, variant, onClick, disabled, customClass }) {
+export function Button({
+  children,
+  isSubmit,
+  variant,
+  onClick,
+  disabled,
+  customClass,
+}) {
   const { primaryColor } = useSelector((state) => state.theme);
   const primaryStyles = {
     background: primaryColor,
     color: 'white',
-    border: `1px solid ${primaryColor}`
+    border: `1px solid ${primaryColor}`,
   };
   const secondaryStyles = {
-    background: '#fff',
+    background: 'transparent',
     color: primaryColor,
-    border: `1px solid ${primaryColor}`
+    border: `1px solid ${primaryColor}`,
   };
   return (
     <button
@@ -21,7 +28,8 @@ export function Button({ children, isSubmit, variant, onClick, disabled, customC
       style={variant === 'secondary' ? secondaryStyles : primaryStyles}
       type={isSubmit ? 'submit' : 'button'}
       disabled={disabled}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {children}
     </button>
   );
