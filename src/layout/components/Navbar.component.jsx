@@ -1,33 +1,33 @@
-import { Link, useLocation } from "react-router-dom";
-import { Drawer, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import "./Navbar.styles.scss";
-import { useNavigate } from "react-router-dom";
-import { logout } from "store/Slices/authSlice";
+import { Link, useLocation } from 'react-router-dom';
+import { Drawer, Button } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import './Navbar.styles.scss';
+import { useNavigate } from 'react-router-dom';
+import { logout } from 'store/Slices/authSlice';
 
 const links = [
-  { path: "/dashboard/onsite-users", text: "On-Site Users" },
-  { path: "/dashboard/check-in", text: "Check-Ins & Check-Outs" },
-  { path: "/dashboard/barcodes", text: "Barcodes" },
-  { path: "/dashboard/settings", text: "Settings" },
+  { path: '/dashboard/onsite-users', text: 'On-Site Users' },
+  { path: '/dashboard/check-in', text: 'Check-Ins & Check-Outs' },
+  { path: '/dashboard/barcodes', text: 'Barcodes' },
+  { path: '/dashboard/settings', text: 'Settings' },
 ];
 
 const adminLinks = [
-  { path: "/dashboard/onsite-users", text: "On-Site Users" },
-  { path: "/dashboard/all-users", text: "All Users" },
-  { path: "/dashboard/all-admins", text: "All Admins" },
-  { path: "/dashboard/check-in", text: "Check-Ins & Check-Outs" },
-  { path: "/dashboard/barcodes", text: "Barcodes" },
-  { path: "/dashboard/settings", text: "Settings" },
+  { path: '/dashboard/onsite-users', text: 'On-Site Users' },
+  { path: '/dashboard/all-users', text: 'All Users' },
+  { path: '/dashboard/all-admins', text: 'All Admins' },
+  { path: '/dashboard/check-in', text: 'Check-Ins & Check-Outs' },
+  { path: '/dashboard/barcodes', text: 'Barcodes' },
+  { path: '/dashboard/settings', text: 'Settings' },
 ];
 
 export function Navbar() {
   const liveCount = useSelector((state) => state.users.liveCount);
   const { webSettings } = useSelector((state) => state.settings);
   const { user } = useSelector((state) => state.auth);
-  const isSupperAdmin = user && user.role === "super-admin" ? true : false;
+  const isSupperAdmin = user && user.role === 'super-admin' ? true : false;
   const [visible, setVisible] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
 
@@ -44,7 +44,7 @@ export function Navbar() {
   //====LOGOUT HANDLER====
   const LogoutHandler = () => {
     dispatch(logout());
-    navigate("/");
+    navigate('/');
   };
 
   const { pathname } = useLocation();
@@ -66,50 +66,45 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="navbar__links">
-        <div className="navbar__links-container">
-          {(isSupperAdmin ? adminLinks : links).map((link) => {
-            return (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`navbar__links-container-el ${
-                  pathname === link.path
-                    ? "navbar__links-container-el-active"
-                    : ""
-                }`}
-                style={
-                  linkHovered === link.path || pathname === link.path
-                    ? linkHoverStyles
-                    : {}
-                }
-                onMouseEnter={() => toggleHover(link)}
-                onMouseLeave={() => setLinkHovered(false)}
-              >
-                {link?.text}
-              </Link>
-            );
-          })}
+      <div className="navbar__links-container">
+        {(isSupperAdmin ? adminLinks : links).map((link) => {
+          return (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`navbar__links-container-el ${
+                pathname === link.path
+                  ? 'navbar__links-container-el-active'
+                  : ''
+              }`}
+              style={
+                linkHovered === link.path || pathname === link.path
+                  ? linkHoverStyles
+                  : {}
+              }
+              onMouseEnter={() => toggleHover(link)}
+              onMouseLeave={() => setLinkHovered(false)}
+            >
+              {link?.text}
+            </Link>
+          );
+        })}
+      </div>
+      <div className="navbar__links-right">
+        <div className="navbar__links-right-lc" style={{ color: primaryColor }}>
+          Live Count : {liveCount}
         </div>
-        <div className="navbar__links-right">
-          <div
-            className="navbar__links-right-lc"
-            style={{ color: primaryColor }}
-          >
-            Live Count : {liveCount}
-          </div>
-          <Button
-            type="primary"
-            size="small"
-            onClick={LogoutHandler}
-            style={{
-              background: primaryColor,
-              border: `1px solid ${primaryColor}`,
-            }}
-          >
-            Sign Out
-          </Button>
-        </div>
+        <Button
+          type="primary"
+          size="small"
+          onClick={LogoutHandler}
+          style={{
+            background: primaryColor,
+            border: `1px solid ${primaryColor}`,
+          }}
+        >
+          Sign Out
+        </Button>
       </div>
 
       <div className="navbar__hamburger">
@@ -139,8 +134,8 @@ export function Navbar() {
                 onClick={onClose}
                 className={`navbar__links-container-el ${
                   pathname === link.path
-                    ? "navbar__links-container-el-active"
-                    : ""
+                    ? 'navbar__links-container-el-active'
+                    : ''
                 }`}
                 style={
                   linkHovered === link.path || pathname === link.path

@@ -1,4 +1,4 @@
-@import "../../styles/mixins";
+@import '../../styles/mixins';
 
 .navbar {
   display: flex;
@@ -45,18 +45,11 @@
   }
 
   .navbar__links {
-    display: none;
-    align-items: center;
-    @include moreThanTablet() {
-      display: flex;
-    }
-    gap: 40px;
-    @include moreThanDesktop1440() {
-      gap: 140px;
-    }
-
     &-container {
-      display: flex;
+      display: none;
+      @include moreThanTablet() {
+        display: flex;
+      }
       align-items: center;
       gap: 10px;
       @include moreThanDesktop1440() {
@@ -87,7 +80,10 @@
     }
 
     &-right {
-      display: flex;
+      display: none;
+      @include moreThanTablet() {
+        display: flex;
+      }
       gap: 12px;
       align-items: center;
 
