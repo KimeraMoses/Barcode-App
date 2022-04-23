@@ -13,12 +13,12 @@ const columns = [
   {
     title: "USER ID",
     dataIndex: "uid",
-    sorter: (a, b) => a.uid - b.uid,
+    sorter: (a, b) => a.uuid - b.uuid,
   },
   {
     title: "NAME",
     dataIndex: "name",
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b) => a.full_name.length - b.full_name.length,
   },
   {
     title: "STATUS",
@@ -30,12 +30,12 @@ const columns = [
   {
     title: "LAST CHECK IN",
     dataIndex: "last_check_in",
-    sorter: (a, b) => a.last_check_in - b.last_check_in,
+    sorter: (a, b) => a.lastCheckIn - b.lastCheckIn,
   },
   {
     title: "LAST CHECK OUT",
     dataIndex: "last_check_out",
-    sorter: (a, b) => a.last_check_out - b.last_check_out,
+    sorter: (a, b) => a.lastCheckout - b.lastCheckout,
   },
 ];
 
