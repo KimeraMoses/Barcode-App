@@ -29,16 +29,21 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState('');
-
   useEffect(() => {
     if (searchText) {
       setSearchText(searchText);
       const search = searchText.toLowerCase();
       const newData = data.filter((item) => {
-        const value =
-          typeof item[selectedFilter] === 'number'
-            ? item[selectedFilter].toString().toLowerCase()
-            : item[selectedFilter].toLowerCase();
+        const itemValue = item[selectedFilter];
+        let value;
+        if (itemValue !== undefined && itemValue !== null) {
+          value =
+            typeof item[selectedFilter] === 'number'
+              ? item[selectedFilter].toString().toLowerCase()
+              : item[selectedFilter].toLowerCase();
+        } else {
+          value = '';
+        }
         return value.indexOf(search) !== -1;
       });
       if (newData.length) {

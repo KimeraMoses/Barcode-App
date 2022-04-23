@@ -1,20 +1,20 @@
-import { Button, Input, SelectTimeZone, Switch } from "components";
-import { Formik, Form } from "formik";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { messageNotifications } from "store";
-import { editAdminDetails, editUserDetails } from "store/Actions/userActions";
-import * as Yup from "yup";
-import "./EditUser.styles.scss";
+import { Button, Input, SelectTimeZone, Switch } from 'components';
+import { Formik, Form } from 'formik';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { messageNotifications } from 'store';
+import { editAdminDetails, editUserDetails } from 'store/Actions/userActions';
+import * as Yup from 'yup';
+import './EditUser.styles.scss';
 
 const validationSchema__Admin = Yup.object().shape({
-  name: Yup.string().required("Name is required!"),
-  userName: Yup.string().required("User Name is required!"),
+  name: Yup.string().required('Name is required!'),
+  userName: Yup.string().required('User Name is required!'),
   email: Yup.string()
-    .email("Please enter a valid email.")
-    .required("Email is required!"),
-  timeZone: Yup.string().required("Timezone is required!"),
+    .email('Please enter a valid email.')
+    .required('Email is required!'),
+  timeZone: Yup.string().required('Timezone is required!'),
 });
 
 export function EditUser({ setModal, user, setUser, isAdmin }) {
@@ -22,18 +22,18 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required!"),
+    name: Yup.string().required('Name is required!'),
     email: Yup.string()
-      .email("Please enter a valid email.")
-      .required("Email is required!"),
-    company: Yup.string().required("Company is required!"),
+      .email('Please enter a valid email.')
+      .required('Email is required!'),
+    company: Yup.string().required('Company is required!'),
   });
 
   return (
     <div className="edit-user__modal">
       <div className="edit-user__modal-content">
         Please enter the required information below in order to edit the
-        {isAdmin ? " admin " : " user "}
+        {isAdmin ? ' admin ' : ' user '}
         record to the table being displayed.
       </div>
       {Object.keys(user).length ? (
@@ -42,8 +42,8 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
             name: user?.name,
             email: user?.email,
             company: user?.company,
-            status: user?.status !== "Disabled" ? true : false,
-            superAdmin: user?.role === "super-admin" ? true : false,
+            status: user?.status !== 'Disabled' ? true : false,
+            superAdmin: user?.role === 'super-admin' ? true : false,
             userName: user?.username,
             timeZone: user?.timezone,
           }}
@@ -63,7 +63,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                       values.userName,
                       values.email,
                       values.status ? 1 : 0,
-                      values.superAdmin ? "super-admin" : "admin",
+                      values.superAdmin ? 'super-admin' : 'admin',
                       values.timeZone,
                       false
                     )
@@ -100,6 +100,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                   placeholder="Full Name"
                   errors={errors}
                   touched={touched}
+                  customClass="edit-user__modal-form-el"
                 />
                 <Input
                   name="email"
@@ -107,6 +108,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                   placeholder="Email Address"
                   errors={errors}
                   touched={touched}
+                  customClass="edit-user__modal-form-el"
                 />
                 {isAdmin && (
                   <>
@@ -116,6 +118,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                       placeholder="UserName"
                       errors={errors}
                       touched={touched}
+                      customClass="edit-user__modal-form-el"
                     />
                     <SelectTimeZone name="timeZone" />
                   </>
@@ -127,6 +130,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                     placeholder="Company"
                     errors={errors}
                     touched={touched}
+                    customClass="edit-user__modal-form-el"
                   />
                 )}
                 <Switch
@@ -134,6 +138,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                   placeholder="Status"
                   errors={errors}
                   touched={touched}
+                  customClass="edit-user__modal-form-el"
                 />
                 {isAdmin && (
                   <Switch
@@ -141,6 +146,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                     placeholder="Make Super Admin?"
                     errors={errors}
                     touched={touched}
+                    customClass="edit-user__modal-form-el"
                   />
                 )}
                 <div className="edit-user__modal-buttons">
@@ -154,7 +160,7 @@ export function EditUser({ setModal, user, setUser, isAdmin }) {
                     Cancel
                   </Button>
                   <Button isSubmit disabled={isLoading}>
-                    {isLoading ? "Saving..." : "Save Changes"}
+                    {isLoading ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </div>
               </Form>
