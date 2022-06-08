@@ -41,8 +41,9 @@ function App() {
             webSettings && webSettings.site_name
               ? webSettings.site_name
               : "Loading..."
-          }`}
-          | Admin
+          } `}
+          {" | "}
+          Admin
         </title>
       </Helmet>
       <Router>

@@ -53,6 +53,8 @@ function CheckIn() {
 
   let data = [];
 
+  console.log("checked In", userEvents);
+
   userEvents &&
     userEvents.forEach((event) => {
       if (event.user_id) {

@@ -15,6 +15,9 @@ import {
   fetchAdminsFail,
   fetchAdminsPending,
   fetchAdminsSuccess,
+  fetchEnabledUsersFail,
+  fetchEnabledUsersPending,
+  fetchEnabledUsersSuccess,
   fetchEventsFail,
   fetchEventsPending,
   fetchEventsSuccess,
@@ -43,7 +46,7 @@ export const fetchAllUserEvents = (authToken) => {
         }
       );
       const res = await response.json();
-      dispatch(fetchEventsSuccess(res.data));
+      dispatch(fetchEventsSuccess(res?.data));
     } catch (error) {
       dispatch(fetchEventsFail(error));
     }
@@ -70,6 +73,29 @@ export const fetchOnSiteUsers = (authToken) => {
       dispatch(fetchLiveCount(data.liveCount));
     } catch (error) {
       dispatch(fetchUsersFail(error));
+    }
+  };
+};
+
+export const fetchEnabledUsers = (authToken) => {
+  return async (dispatch) => {
+    dispatch(fetchEnabledUsersPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASEURL}/api/v1/users/getEnabledUsers`,
+        {
+          method: "GET",
+          headers: new Headers({
+            "Content-type": "application/json",
+            Authorization: "Bearer " + authToken,
+            apiKey: process.env.REACT_APP_APIKEY,
+          }),
+        }
+      );
+      const data = await response.json();
+      dispatch(fetchEnabledUsersSuccess(data?.users));
+    } catch (error) {
+      dispatch(fetchEnabledUsersFail(error));
     }
   };
 };

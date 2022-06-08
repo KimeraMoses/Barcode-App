@@ -78,7 +78,7 @@ function Barcodes() {
     barCodeList.forEach((code) => {
       data.push({
         key: code.id,
-        sid: code.id,
+        sid: code.uuid,
         image: code.uuid,
         name: code.user_id && code.user_id.full_name,
         status:

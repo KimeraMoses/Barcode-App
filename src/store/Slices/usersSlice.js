@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userList: [],
+  enbaledUsers: [],
   adminList: [],
   userEvents: [],
   userDetails: {},
@@ -23,6 +24,19 @@ const userSlice = createSlice({
       state.isLoading = false;
     },
     fetchUsersFail: (state, { payload }) => {
+      state.message = payload.message;
+      state.status = payload.status;
+      state.isLoading = false;
+    },
+    fetchEnabledUsersPending: (state) => {
+      state.isLoading = true;
+    },
+    fetchEnabledUsersSuccess: (state, { payload }) => {
+      state.enbaledUsers = payload;
+      state.status = payload.status;
+      state.isLoading = false;
+    },
+    fetchEnabledUsersFail: (state, { payload }) => {
       state.message = payload.message;
       state.status = payload.status;
       state.isLoading = false;
@@ -158,5 +172,8 @@ export const {
   fetchEventsPending,
   fetchEventsSuccess,
   fetchEventsFail,
+  fetchEnabledUsersPending,
+  fetchEnabledUsersSuccess,
+  fetchEnabledUsersFail,
 } = actions;
 export default reducer;

@@ -1,4 +1,3 @@
-// import { useTranslation } from 'react-i18next';
 import { Button, Heading, Table, Modal } from "components";
 import { exportToExcel } from "utils";
 import { useEffect, useState } from "react";
@@ -95,29 +94,30 @@ function OnSiteUsers() {
       const last_check_out_date = new Date(user.lastCheckout);
       const isValidCheckInDate = isValidDate(last_check_in_date);
       const isValidCheckOutDate = isValidDate(last_check_out_date);
-      data.push({
-        key: user.id,
-        uid: user.id,
-        name: user.full_name,
-        email: user.email,
-        status:
-          last_check_in_date > last_check_out_date ||
-          (isValidCheckInDate && !isValidCheckOutDate)
-            ? "Currently Checked In"
-            : "Currently Checked Out",
-        last_check_in:
-          user.lastCheckIn !== ""
-            ? last_check_in_date.toLocaleTimeString("en-Us", {
-                ...dateFormat,
-              })
-            : "Never checked In",
-        last_check_out:
-          user.lastCheckout !== ""
-            ? last_check_out_date.toLocaleTimeString("en-Us", {
-                ...dateFormat,
-              })
-            : "Never checked out",
-      });
+      if (
+        last_check_in_date > last_check_out_date ||
+        (isValidCheckInDate && !isValidCheckOutDate)
+      ) {
+        data.push({
+          key: user.id,
+          uid: user.id,
+          name: user.full_name,
+          email: user.email,
+          status: "Currently Checked In",
+          last_check_in:
+            user.lastCheckIn !== ""
+              ? last_check_in_date.toLocaleTimeString("en-Us", {
+                  ...dateFormat,
+                })
+              : "Never checked In",
+          last_check_out:
+            user.lastCheckout !== ""
+              ? last_check_out_date.toLocaleTimeString("en-Us", {
+                  ...dateFormat,
+                })
+              : "Never checked out",
+        });
+      }
     });
 
   // Buttons for Table
