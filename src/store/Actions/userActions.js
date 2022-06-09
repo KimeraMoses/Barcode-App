@@ -94,8 +94,10 @@ export const fetchEnabledUsers = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchEnabledUsersSuccess(data?.users));
+      // console.log("users", data?.users);
     } catch (error) {
       dispatch(fetchEnabledUsersFail(error));
+      // console.log(error);
     }
   };
 };
@@ -335,7 +337,11 @@ export const checkInUsers =
       const res = await response.json();
       dispatch(checkUsersSuccess(res));
       dispatch(fetchOnSiteUsers(authToken));
+      dispatch(fetchEnabledUsers(authToken));
     } catch (error) {
       dispatch(checkUsersFail(error));
     }
   };
+
+// "username": "dasdmishn42",
+//   "password": "admin4321"

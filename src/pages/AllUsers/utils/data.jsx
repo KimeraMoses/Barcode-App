@@ -21,7 +21,7 @@ export const getColumns = (onEditClick, onDeleteClick) => {
     {
       title: "STATUS",
       dataIndex: "status",
-      width: 500,
+      width: 300,
       render: (text) => (
         <div
           className={`all-users__status ${

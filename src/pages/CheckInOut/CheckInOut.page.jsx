@@ -23,7 +23,7 @@ const columns = [
   {
     title: "EVENT",
     dataIndex: "event",
-    width: 900,
+    width: 500,
     render: (text) => (
       <div
         className={`check-in-out__status ${
