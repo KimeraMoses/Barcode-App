@@ -1,44 +1,44 @@
-import { Button, Input, SelectTimeZone, Switch } from 'components';
-import { Formik, Form } from 'formik';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { messageNotifications } from 'store';
-import { createNewAdmin, createNewUser } from 'store/Actions/userActions';
-import * as Yup from 'yup';
-import './AddUser.styles.scss';
+import { Button, Input, SelectTimeZone, Switch } from "components";
+import { Formik, Form } from "formik";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { messageNotifications } from "store";
+import { createNewAdmin, createNewUser } from "store/Actions/userActions";
+import * as Yup from "yup";
+import "./AddUser.styles.scss";
 
 const initialValues = {
-  name: '',
-  email: '',
-  company: '',
+  name: "",
+  email: "",
+  company: "",
   status: false,
-  welcomeMsg: '',
-  password: '',
-  timeZone: '',
-  userName: '',
+  welcomeMsg: "",
+  password: "",
+  timeZone: "",
+  userName: "",
   superAdmin: false,
 };
 
 const validationSchema__User = Yup.object().shape({
-  name: Yup.string().required('Name is required!'),
+  name: Yup.string().required("Name is required!"),
   email: Yup.string()
-    .email('Please enter a valid email.')
-    .required('Email is required!'),
-  company: Yup.string().required('Company is required!'),
-  welcomeMsg: Yup.string().required('Welcome message is required!'),
+    .email("Please enter a valid email.")
+    .required("Email is required!"),
+  company: Yup.string().required("Company is required!"),
+  welcomeMsg: Yup.string(),
 });
 
 const validationSchema__Admin = Yup.object().shape({
-  name: Yup.string().required('Name is required!'),
-  userName: Yup.string().required('User Name is required!'),
+  name: Yup.string().required("Name is required!"),
+  userName: Yup.string().required("User Name is required!"),
   email: Yup.string()
-    .email('Please enter a valid email.')
-    .required('Email is required!'),
+    .email("Please enter a valid email.")
+    .required("Email is required!"),
   password: Yup.string()
-    .required('Password is required!')
-    .min(8, 'Password must be minimum of 8 characters'),
-  timeZone: Yup.string().required('Timezone is required!'),
+    .required("Password is required!")
+    .min(8, "Password must be minimum of 8 characters"),
+  timeZone: Yup.string().required("Timezone is required!"),
 });
 export function AddUser({ setModal, isAdmin }) {
   const authToken = useSelector((state) => state.auth.token);
@@ -49,7 +49,7 @@ export function AddUser({ setModal, isAdmin }) {
     <div className="add-user__modal">
       <div className="add-user__modal-content">
         Please enter the required information below in order to add a new
-        {isAdmin ? ' admin ' : ' user '}
+        {isAdmin ? " admin " : " user "}
         record to the table being displayed.
       </div>
       <Formik
@@ -69,7 +69,7 @@ export function AddUser({ setModal, isAdmin }) {
                     values.password,
                     values.email,
                     values.status ? 1 : 0,
-                    values.superAdmin ? 'super-admin' : 'admin',
+                    values.superAdmin ? "super-admin" : "admin",
                     values.timeZone
                   )
                 : createNewUser(
@@ -85,7 +85,7 @@ export function AddUser({ setModal, isAdmin }) {
             setIsLoading(false);
             setModal(false);
             toast.success(
-              `New ${isAdmin ? 'admin' : 'user'} created successfuly`,
+              `New ${isAdmin ? "admin" : "user"} created successfuly`,
               {
                 ...messageNotifications,
               }
@@ -185,8 +185,8 @@ export function AddUser({ setModal, isAdmin }) {
               </Button>
               <Button isSubmit disabled={isLoading}>
                 {isLoading
-                  ? 'Adding...'
-                  : `Add New ${isAdmin ? 'Admin' : 'User'}`}
+                  ? "Adding..."
+                  : `Add New ${isAdmin ? "Admin" : "User"}`}
               </Button>
             </div>
           </Form>

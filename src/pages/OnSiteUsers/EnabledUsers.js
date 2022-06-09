@@ -89,7 +89,7 @@ const EnabledUsers = (props) => {
       <div>
         <div className="on-site__modal-content">
           Please select the users from the list given below in order to manually
-          check them {checkInModal ? "in to" : "out of"}
+          check them {checkInModal ? "in to " : "out of "}
           the system.
         </div>
         <div className="on-site__modal-list">
@@ -100,7 +100,7 @@ const EnabledUsers = (props) => {
           ) : (
             UserList.map((row) => {
               return (
-                <div className="on-site__modal-list-el" key={row.uuid}>
+                <div className="on-site__modal-list-el" key={row.id}>
                   <div className="on-site__modal-list-el-cn">
                     <input
                       type="checkbox"
