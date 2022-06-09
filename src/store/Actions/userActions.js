@@ -342,6 +342,3 @@ export const checkInUsers =
       dispatch(checkUsersFail(error));
     }
   };
-
-// "username": "dasdmishn42",
-//   "password": "admin4321"
