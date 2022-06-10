@@ -33,7 +33,7 @@ const EnabledUsers = (props) => {
       userList.filter(
         (user) =>
           new Date(user.lastCheckIn) > new Date(user.lastCheckout) ||
-          !user.lastCheckout
+          (!user.lastCheckout && user.lastCheckIn)
       );
   }
 
@@ -109,7 +109,7 @@ const EnabledUsers = (props) => {
                     />
                     <div>{row?.full_name}</div>
                   </div>
-                  <div>{row?.id}</div>
+                  <div>{row?.barcode_id}</div>
                 </div>
               );
             })

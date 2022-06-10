@@ -56,11 +56,11 @@ function CheckIn() {
   userEvents &&
     userEvents.forEach((event) => {
       if (event.user_id) {
-        const last_check_out_date = new Date(event.updated);
+        const last_check_out_date = new Date(event.created);
         data.push({
           key: event.id,
-          uid: event.id,
-          name: event.user_id.full_name,
+          uid: event.user_id?.barcode_id,
+          name: event.user_id?.full_name,
           event: event.type === "checkIn" ? "Checked In" : "Checked Out",
           last_check_out: isValidDate(last_check_out_date)
             ? last_check_out_date.toLocaleTimeString("en-Us", {

@@ -90,7 +90,7 @@ function OnSiteUsers() {
       ) {
         data.push({
           key: user.id,
-          uid: user.id,
+          uid: user.barcode_id,
           name: user.full_name,
           email: user.email,
           status: "Currently Checked In",
