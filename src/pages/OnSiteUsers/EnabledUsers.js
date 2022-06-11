@@ -12,7 +12,6 @@ const EnabledUsers = (props) => {
   const authToken = useSelector((state) => state.auth.token);
   const userList = useSelector((state) => state.users.enbaledUsers);
   const dispatch = useDispatch();
-  console.log("Users", userList);
 
   useEffect(() => {
     dispatch(fetchEnabledUsers(authToken));
