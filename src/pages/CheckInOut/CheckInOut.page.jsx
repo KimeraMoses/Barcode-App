@@ -54,22 +54,25 @@ function CheckIn() {
   let data = [];
 
   userEvents &&
-    userEvents.forEach((event) => {
-      if (event.user_id) {
-        const last_check_out_date = new Date(event.created);
-        data.push({
-          key: event.id,
-          uid: event.user_id?.barcode_id,
-          name: event.user_id?.full_name,
-          event: event.type === "checkIn" ? "Checked In" : "Checked Out",
-          last_check_out: isValidDate(last_check_out_date)
-            ? last_check_out_date.toLocaleTimeString("en-Us", {
-                ...dateFormat,
-              })
-            : "No Date Found",
-        });
-      }
-    });
+    userEvents
+      .slice()
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .forEach((event) => {
+        if (event.user_id) {
+          const last_check_out_date = new Date(event.created);
+          data.push({
+            key: event.id,
+            uid: event.user_id?.barcode_uuid,
+            name: event.user_id?.full_name,
+            event: event.type === "checkIn" ? "Checked In" : "Checked Out",
+            last_check_out: isValidDate(last_check_out_date)
+              ? last_check_out_date.toLocaleTimeString("en-Us", {
+                  ...dateFormat,
+                })
+              : "No Date Found",
+          });
+        }
+      });
 
   // Buttons for Table
   const buttons = [

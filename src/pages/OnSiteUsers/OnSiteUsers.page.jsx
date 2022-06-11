@@ -79,36 +79,39 @@ function OnSiteUsers() {
   let data = [];
 
   userList &&
-    userList.forEach((user) => {
-      const last_check_in_date = new Date(user.lastCheckIn);
-      const last_check_out_date = new Date(user.lastCheckout);
-      const isValidCheckInDate = isValidDate(last_check_in_date);
-      const isValidCheckOutDate = isValidDate(last_check_out_date);
-      if (
-        last_check_in_date > last_check_out_date ||
-        (isValidCheckInDate && !isValidCheckOutDate)
-      ) {
-        data.push({
-          key: user.id,
-          uid: user.barcode_id,
-          name: user.full_name,
-          email: user.email,
-          status: "Currently Checked In",
-          last_check_in:
-            user.lastCheckIn !== ""
-              ? last_check_in_date.toLocaleTimeString("en-Us", {
-                  ...dateFormat,
-                })
-              : "Never checked In",
-          last_check_out:
-            user.lastCheckout !== ""
-              ? last_check_out_date.toLocaleTimeString("en-Us", {
-                  ...dateFormat,
-                })
-              : "Never checked out",
-        });
-      }
-    });
+    userList
+      .slice()
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .forEach((user) => {
+        const last_check_in_date = new Date(user.lastCheckIn);
+        const last_check_out_date = new Date(user.lastCheckout);
+        const isValidCheckInDate = isValidDate(last_check_in_date);
+        const isValidCheckOutDate = isValidDate(last_check_out_date);
+        if (
+          last_check_in_date > last_check_out_date ||
+          (isValidCheckInDate && !isValidCheckOutDate)
+        ) {
+          data.push({
+            key: user.id,
+            uid: user?.barcode_uuid,
+            name: user.full_name,
+            email: user.email,
+            status: "Currently Checked In",
+            last_check_in:
+              user.lastCheckIn !== ""
+                ? last_check_in_date.toLocaleTimeString("en-Us", {
+                    ...dateFormat,
+                  })
+                : "Never checked In",
+            last_check_out:
+              user.lastCheckout !== ""
+                ? last_check_out_date.toLocaleTimeString("en-Us", {
+                    ...dateFormat,
+                  })
+                : "Never checked out",
+          });
+        }
+      });
 
   // Buttons for Table
   const buttons = [

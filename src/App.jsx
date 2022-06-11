@@ -19,6 +19,7 @@ import {
 } from "store/Actions/siteSettingActions";
 import ForgotPassword from "pages/Password/ForgotPassword.page";
 import ResetPassword from "pages/Password/ResetPassword.page";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   const { webSettings } = useSelector((state) => state.settings);
@@ -33,7 +34,20 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Suspense fallback={<>Loading...</>}>
+    <Suspense
+      fallback={
+        <div
+        // style={{
+        //   postion: "absolute",
+        //   left: "50%",
+        //   top: "50%",
+        //   transform: "translate(-50%, -50%)",
+        // }}
+        >
+          <Spinner />
+        </div>
+      }
+    >
       <ToastContainer />
       <Helmet>
         <title>

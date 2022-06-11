@@ -25,18 +25,21 @@ function AllAdmins() {
   let data = [];
 
   adminList &&
-    adminList.forEach((user) => {
-      data.push({
-        key: user.id,
-        uid: user.id,
-        name: user.full_name,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        status: user.status === 1 ? "Currently Enabled" : "Disabled",
-        timezone: user.timezone,
+    adminList
+      .slice()
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .forEach((user) => {
+        data.push({
+          key: user.id,
+          uid: user.id,
+          name: user.full_name,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          status: user.status === 1 ? "Currently Enabled" : "Disabled",
+          timezone: user.timezone,
+        });
       });
-    });
 
   const buttons = [
     {

@@ -31,18 +31,21 @@ function AllUsers() {
   let data = [];
 
   userList &&
-    userList.forEach((user) => {
-      data.push({
-        key: user.id,
-        uid: user.id,
-        name: user.full_name,
-        email: user.email,
-        company: user.company,
-        status: user.status === 1 ? "Currently Enabled" : "Disabled",
-        check_ins: user.numCheckIns,
-        check_outs: user.numCheckouts,
+    userList
+      .slice()
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .forEach((user) => {
+        data.push({
+          key: user.id,
+          uid: user?.barcode_uuid,
+          name: user.full_name,
+          email: user.email,
+          company: user.company,
+          status: user.status === 1 ? "Currently Enabled" : "Disabled",
+          check_ins: user.numCheckIns,
+          check_outs: user.numCheckouts,
+        });
       });
-    });
 
   const buttons = [
     {

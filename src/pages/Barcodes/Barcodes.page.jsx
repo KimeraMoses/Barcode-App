@@ -75,16 +75,21 @@ function Barcodes() {
 
   const data = [];
   barCodeList &&
-    barCodeList.forEach((code) => {
-      data.push({
-        key: code.id,
-        sid: code.uuid,
-        image: code.uuid,
-        name: code.user_id && code.user_id.full_name,
-        status:
-          code.user_id && code.user_id.status === 1 ? "Confirmed" : "Rejected",
+    barCodeList
+      .slice()
+      .sort((a, b) => new Date(b.created) - new Date(a.created))
+      .forEach((code) => {
+        data.push({
+          key: code.id,
+          sid: code.uuid,
+          image: code.uuid,
+          name: code.user_id && code.user_id.full_name,
+          status:
+            code.user_id && code.user_id.status === 1
+              ? "Confirmed"
+              : "Rejected",
+        });
       });
-    });
 
   // Buttons for Table
   const buttons = [

@@ -12,6 +12,7 @@ const EnabledUsers = (props) => {
   const authToken = useSelector((state) => state.auth.token);
   const userList = useSelector((state) => state.users.enbaledUsers);
   const dispatch = useDispatch();
+  console.log("Users", userList);
 
   useEffect(() => {
     dispatch(fetchEnabledUsers(authToken));
@@ -109,7 +110,7 @@ const EnabledUsers = (props) => {
                     />
                     <div>{row?.full_name}</div>
                   </div>
-                  <div>{row?.barcode_id}</div>
+                  <div>{row?.barcode_uuid}</div>
                 </div>
               );
             })
