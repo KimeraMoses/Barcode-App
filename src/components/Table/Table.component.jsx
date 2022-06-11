@@ -1,21 +1,21 @@
-import { Input, Select, Table as AntdTable } from 'antd';
-import { Button } from 'components';
-import { ArrowDown, ArrowLeft, ArrowRight, Search } from 'icons';
-import { useEffect, useState } from 'react';
-import './Table.styles.scss';
+import { Input, Select, Table as AntdTable } from "antd";
+import { Button } from "components";
+import { ArrowDown, ArrowLeft, ArrowRight, Search } from "icons";
+import { useState } from "react";
+import "./Table.styles.scss";
 
 const { Option } = Select;
 
 // Pagination Items
 function itemRender(current, type, originalElement) {
-  if (type === 'prev') {
+  if (type === "prev") {
     return (
       <div>
         <ArrowLeft />
       </div>
     );
   }
-  if (type === 'next') {
+  if (type === "next") {
     return (
       <div>
         <ArrowRight />
@@ -27,46 +27,36 @@ function itemRender(current, type, originalElement) {
 
 export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
-  const [filteredData, setFilteredData] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  useEffect(() => {
-    if (searchText) {
-      setSearchText(searchText);
-      const search = searchText.toLowerCase();
-      const newData = data.filter((item) => {
-        const itemValue = item[selectedFilter];
-        let value;
-        if (itemValue !== undefined && itemValue !== null) {
-          value =
-            typeof item[selectedFilter] === 'number'
-              ? item[selectedFilter].toString().toLowerCase()
-              : item[selectedFilter].toLowerCase();
-        } else {
-          value = '';
-        }
-        return value.indexOf(search) !== -1;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const userSearchHandler = (e) => {
+    const { value } = e.target;
+    setSearchTerm(value);
+
+    if (searchTerm !== "") {
+      const Results = data.filter((Result) => {
+        return Object.values(Result)
+          .join(" ")
+          .replace(/-/g, " ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
       });
-      if (newData.length) {
-        setFilteredData(newData);
+      if (Results.length > 0) {
+        setSearchResults(Results);
       } else {
-        setFilteredData([
+        setSearchResults([
           {
-            key: 'Not Found',
-            uid: 'Not Found',
-            name: 'Not Found',
-            status: 'Not Found',
-            last_check_in: 'Not Found',
-            last_check_out: 'Not Found',
+            key: "Not Found",
+            uid: "Not Found",
+            name: "Not Found",
+            status: "Not Found",
+            last_check_in: "Not Found",
+            last_check_out: "Not Found",
           },
         ]);
       }
-    } else {
-      setFilteredData([]);
     }
-  }, [searchText, selectedFilter, data]);
-
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
   };
 
   return (
@@ -78,7 +68,9 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
               className="custom-table__filters-search"
               placeholder="Search..."
               suffix={<Search />}
-              onChange={handleSearch}
+              type="search"
+              value={searchTerm}
+              onChange={userSearchHandler}
             />
             <Select
               suffixIcon={<ArrowDown color="#000" />}
@@ -118,7 +110,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
       <AntdTable
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={filteredData.length ? filteredData : data}
+        dataSource={searchTerm.length > 0 ? searchResults : data}
         className="custom-table__el"
         showSorterTooltip={false}
         pagination={{
