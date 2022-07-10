@@ -36,14 +36,7 @@ function App() {
   return (
     <Suspense
       fallback={
-        <div
-        // style={{
-        //   postion: "absolute",
-        //   left: "50%",
-        //   top: "50%",
-        //   transform: "translate(-50%, -50%)",
-        // }}
-        >
+        <div>
           <Spinner />
         </div>
       }
@@ -94,7 +87,9 @@ function App() {
           />
           <Route
             path="/dashboard/*"
-            element={isAuthenticated ? <LoggedInLayout /> : <Navigate to="/" />}
+            element={
+              !isAuthenticated ? <Navigate to="/" /> : <LoggedInLayout />
+            }
           />
         </Routes>
       </Router>
