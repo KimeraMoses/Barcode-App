@@ -1,0 +1,49 @@
+@import "../../styles/mixins";
+
+.modal {
+  display: none;
+}
+.modal.modal-show {
+  display: unset;
+  min-height: 100vh;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  .modal__inner {
+    background: rgba(255, 255, 255, 1);
+    border-radius: 12px;
+    // min-height: 578px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    padding: 32px;
+    width: 95%;
+
+    @include moreThanMobile() {
+      width: 75%;
+    }
+    @include moreThanTablet() {
+      width: 60%;
+    }
+    @include moreThanDesktop() {
+      width: 536px;
+    }
+    &-overflow {
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+    }
+    &-heading {
+      font-size: 24px;
+      letter-spacing: 0px;
+      color: #000000;
+      opacity: 1;
+    }
+  }
+}

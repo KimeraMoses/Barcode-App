@@ -1,0 +1,28 @@
+@import '../../styles/mixins';
+
+.custom-button-component {
+  background: #096dd9;
+  border-radius: 12px;
+  min-height: 60px;
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0px 12px;
+  @include moreThanDesktop() {
+    padding: 0px 40px;
+  }
+}
+
+.custom-button-component.custom-button-component__secondary {
+  border: 1px solid #096dd9;
+  background: transparent;
+  color: #096dd9;
+}

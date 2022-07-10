@@ -1,0 +1,72 @@
+.custom-color-input {
+  width: 100%;
+
+  input {
+    outline: none;
+    width: 75%;
+    border: none;
+    height: 62px;
+    background: #fafafa;
+    &::placeholder {
+      color: #8c8c8c;
+      font-size: 16px;
+    }
+    &:focus-visible {
+      border: 1px solid #fafafa;
+      outline: none;
+    }
+  }
+
+  .custom-color-input__label {
+    text-transform: uppercase;
+    font-size: 14px;
+    clor: #8c8c8c;
+    margin-bottom: 5px;
+  }
+
+  .custom-color-input__el {
+    height: 64px;
+    width: 100%;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #fafafa;
+    padding-left: 24px;
+    padding-right: 24px;
+    transition: all 0.2s ease-in;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .custom-color-input__el.custom-color-input__el-invalid {
+    border: 1px solid #ff0000;
+    &:focus-visible {
+      border: 1px solid #ff0000;
+      outline: none;
+    }
+  }
+
+  .custom-color-input__error {
+    color: #ff0000;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+    visibility: hidden;
+  }
+  .custom-color-input__error.custom-color-input__error-show {
+    visibility: visible;
+    animation-name: fadeInDown;
+    animation-fill-mode: both;
+    animation-duration: 0.3s;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

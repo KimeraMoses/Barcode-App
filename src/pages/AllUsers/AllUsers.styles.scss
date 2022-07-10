@@ -1,0 +1,98 @@
+@import '../../styles/mixins';
+
+.all-users {
+  margin-top: 40px;
+  .all-users__filters {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    @include moreThanDesktop() {
+      flex-direction: row;
+    }
+    align-items: center;
+    margin: 40px 0px;
+    .all-users__filters-search-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+    }
+    // Input Styles
+    .all-users__filters-search {
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e8e8e8;
+      width: 100%;
+      @include moreThanDesktop() {
+        min-width: 398px;
+      }
+      .ant-input {
+        &::placeholder {
+          font: normal normal normal 16px/21px Roboto;
+          letter-spacing: 0px;
+          color: #8c8c8c;
+        }
+      }
+    }
+
+    // Select Styles
+    .all-users__filters-select {
+      height: 60px;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      margin-bottom: 20px;
+      @include moreThanMobile {
+        min-width: 260px;
+        margin-bottom: 0px;
+      }
+      .ant-select-selector {
+        border-radius: 12px;
+      }
+      .ant-select-selection-item {
+        font-size: 16px;
+        letter-spacing: 0px;
+        color: #8c8c8c;
+      }
+    }
+
+    .all-users__filters-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      flex-direction: column;
+      width: 100%;
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+      button {
+        width: 100%;
+        @include moreThanDesktop() {
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+.all-users__status {
+  border-radius: 12px;
+  background: #e6fffb;
+  padding: 12px 24px;
+  color: #13c2c2;
+  width: fit-content;
+  font-weight: 500;
+}
+
+.all-users__status.all-users__status-disabled {
+  background: #fffbe6;
+  color: #faad14;
+}

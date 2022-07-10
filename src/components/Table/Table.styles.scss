@@ -1,0 +1,227 @@
+@import '../../styles/mixins';
+
+.custom-table {
+  // Checkbox radius
+  .ant-checkbox-inner {
+    border-radius: 4px;
+  }
+  &__el {
+    background: #fff;
+    border-radius: 12px;
+    div.ant-table {
+      color: #000 !important;
+      font-size: 14px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      .ant-table-container {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+      .ant-table-container table > thead > tr:first-child th:first-child {
+        border-top-left-radius: 12px;
+      }
+      .ant-table-container table > thead > tr:first-child th:last-child {
+        border-top-right-radius: 12px;
+      }
+
+      .ant-table-tbody > tr.ant-table-row-selected > td {
+        background: #fafafa;
+      }
+    }
+    .ant-table-cell {
+      padding: 16px 16px;
+      border-bottom: 1px dashed #e0dede;
+    }
+    th.ant-table-cell {
+      color: #8c8c8c;
+      text-transform: uppercase;
+      font-size: 12px;
+      background: #ffffff;
+    }
+
+    // Table pagination styles
+    .ant-pagination-item {
+      display: none;
+    }
+    .ant-pagination-jump-next {
+      display: none;
+    }
+    .ant-table-pagination.ant-pagination {
+      margin: 0px;
+      &::after {
+        display: none;
+      }
+    }
+    .ant-pagination {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      @include moreThanDesktop() {
+        grid-template-columns: repeat(24, 1fr);
+      }
+      padding: 100px 32px 44px 32px;
+      .ant-pagination-total-text {
+        grid-column: 1/6;
+        font: normal normal medium 16px/21px Roboto;
+        letter-spacing: 0px;
+        color: #000000;
+      }
+      .ant-pagination-prev {
+        grid-column: 23 / 24;
+        justify-items: center;
+        align-content: center;
+        display: inline-grid;
+        margin-right: 5px;
+        div {
+          background: #fafafa 0% 0% no-repeat padding-box;
+          border-radius: 12px;
+          width: 45px;
+          height: 45px;
+          opacity: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ant-pagination-next {
+        grid-column: 24 / 25;
+        justify-items: center;
+        align-content: center;
+        display: inline-grid;
+        margin-left: 5px;
+        div {
+          background: #fafafa 0% 0% no-repeat padding-box;
+          border-radius: 12px;
+          width: 45px;
+          height: 45px;
+          opacity: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      .ant-pagination-jump-prev {
+        display: none;
+      }
+      .ant-pagination-disabled {
+        svg {
+          path {
+            stroke: #8c8c8c;
+          }
+        }
+      }
+    }
+  }
+
+  .custom-table__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0px;
+    flex-direction: column;
+    @include moreThanDesktop() {
+      flex-direction: row;
+    }
+    .custom-table__filters-search-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 0px;
+      @include moreThanTablet() {
+        flex-direction: row;
+        margin-bottom: 20px;
+      }
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+        margin-bottom: 0px;
+      }
+    }
+    // Input Styles
+    .custom-table__filters-search {
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e8e8e8;
+      background: transparent;
+      width: 100%;
+      input {
+        background: transparent;
+      }
+      @include moreThanTablet() {
+        width: 50%;
+      }
+      @include moreThanDesktop() {
+        min-width: 398px;
+      }
+      .ant-input {
+        font-size: 16px;
+        &::placeholder {
+          font-family: Roboto;
+          font-size: 16px;
+          letter-spacing: 0px;
+          color: #8c8c8c;
+        }
+      }
+    }
+
+    // Select Styles
+    .custom-table__filters-select {
+      height: 60px;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      margin-bottom: 20px;
+      background: transparent;
+      @include moreThanTablet() {
+        width: 50%;
+        margin-bottom: 0px;
+      }
+      @include moreThanDesktop() {
+        min-width: 260px;
+      }
+      .ant-select-selector {
+        border-radius: 12px;
+        background: transparent;
+        padding-left: 20px;
+      }
+      .ant-select-arrow {
+        right: 20px;
+      }
+      .ant-select-selection-item {
+        font-size: 16px;
+        letter-spacing: 0px;
+        color: #8c8c8c;
+      }
+    }
+
+    .custom-table__filters-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      width: 100%;
+      @include moreThanTablet() {
+        flex-direction: row;
+      }
+      @include moreThanDesktop() {
+        flex-direction: row;
+        width: auto;
+      }
+      button {
+        width: 100%;
+        @include moreThanDesktop() {
+          width: auto;
+        }
+      }
+    }
+  }
+}
+
+// Select Dropdown styles
+.custom-select__dropdown {
+  .ant-select-item {
+    padding: 10px 12px;
+  }
+}
