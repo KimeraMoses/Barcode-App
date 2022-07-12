@@ -1,28 +1,28 @@
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { Button, Input } from 'components';
-import { Link, useNavigate } from 'react-router-dom';
-import './Login.styles.scss';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { messageNotifications } from 'store';
-import { login } from 'store/Actions/authActions';
-import { useDispatch } from 'react-redux';
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { Button, Input } from "components";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.styles.scss";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { messageNotifications } from "store";
+import { login } from "store/Actions/authActions";
+import { useDispatch } from "react-redux";
 
 const initialValues = {
-  user: '',
-  password: '',
+  user: "",
+  password: "",
 };
 
 const validationSchema = Yup.object().shape({
   user: Yup.string()
-    .required('This field is Required!')
-    .min(4, 'Too Short!')
-    .max(50, 'Too Long!'),
+    .required("This field is Required!")
+    .min(4, "Too Short!")
+    .max(50, "Too Long!"),
   password: Yup.string()
-    .required('This field is Required!')
-    .min(4, 'Too Short!')
-    .max(50, 'Too Long!'),
+    .required("This field is Required!")
+    .min(4, "Too Short!")
+    .max(50, "Too Long!"),
 });
 
 function Login() {
@@ -52,15 +52,15 @@ function Login() {
             try {
               await dispatch(login(values.user, values.password));
               resetForm();
-              toast.success('You have logged in successfuly', {
+              toast.success("You have logged in successfuly", {
                 ...messageNotifications,
               });
               setIsLoading(false);
-              navigate('/dashboard/onsite-users');
+              navigate("/dashboard/onsite-users");
             } catch (err) {
-              console.log('err', err);
+              console.log("err", err);
               setIsLoading(false);
-              toast.error('Failed to Login', {
+              toast.error("Failed to Login", {
                 ...messageNotifications,
               });
             }
@@ -90,7 +90,7 @@ function Login() {
                   customClass="login-page__card-form-buttons-btn"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Logging In...' : 'Get Started'}
+                  {isLoading ? "Logging In..." : "Get Started"}
                 </Button>
                 <Link to="/forgot-password">
                   <Button customClass="login-page__card-form-buttons-btn forgot-btn">
