@@ -1,7 +1,7 @@
 import { Input, Select, Table as AntdTable } from "antd";
 import { Button } from "components";
 import { ArrowDown, ArrowLeft, ArrowRight, Search } from "icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Table.styles.scss";
 
 const { Option } = Select;
@@ -29,13 +29,49 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  let userFilteredData = data;
+  useEffect(() => {
+    const newData = userFilteredData?.sort((a, b) => {
+      let fa =
+          typeof a[selectedFilter] === "number"
+            ? a[selectedFilter].toString().toLowerCase()
+            : a[selectedFilter]?.toLowerCase(),
+        fb =
+          typeof b[selectedFilter] === "number"
+            ? b[selectedFilter].toString().toLowerCase()
+            : b[selectedFilter]?.toLowerCase();
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+    if (newData.length) {
+      setFilteredData(newData);
+    } else {
+      setFilteredData([
+        {
+          key: "Not Found",
+          uid: "Not Found",
+          name: "Not Found",
+          status: "Not Found",
+          last_check_in: "Not Found",
+          last_check_out: "Not Found",
+        },
+      ]);
+    }
+  }, [selectedFilter, userFilteredData]);
 
   const userSearchHandler = (e) => {
     const { value } = e.target;
     setSearchTerm(value);
 
     if (searchTerm !== "") {
-      const Results = data.filter((Result) => {
+      const Results = userFilteredData.filter((Result) => {
         return Object.values(Result)
           .join(" ")
           .replace(/-/g, " ")
@@ -110,7 +146,13 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
       <AntdTable
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={searchTerm.length > 0 ? searchResults : data}
+        dataSource={
+          searchTerm.length > 0
+            ? [...searchResults]
+            : filteredData.length > 0
+            ? [...filteredData]
+            : [...data]
+        }
         className="custom-table__el"
         showSorterTooltip={false}
         pagination={{
