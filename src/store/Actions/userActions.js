@@ -22,6 +22,7 @@ import {
   fetchEventsPending,
   fetchEventsSuccess,
   fetchLiveCount,
+  fetchOnSiteUsersSuccess,
   fetchUsersFail,
   fetchUsersPending,
   fetchUsersSuccess,
@@ -69,7 +70,7 @@ export const fetchOnSiteUsers = (authToken) => {
         }
       );
       const data = await response.json();
-      dispatch(fetchUsersSuccess(data.users));
+      dispatch(fetchOnSiteUsersSuccess(data.users));
       dispatch(fetchLiveCount(data.liveCount));
     } catch (error) {
       dispatch(fetchUsersFail(error));
@@ -94,10 +95,31 @@ export const fetchEnabledUsers = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchEnabledUsersSuccess(data?.users));
-      // console.log("users", data?.users);
     } catch (error) {
       dispatch(fetchEnabledUsersFail(error));
-      // console.log(error);
+    }
+  };
+};
+
+export const fetchAllUsers = (authToken) => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASEURL}/api/v1/users/`,
+        {
+          method: "GET",
+          headers: new Headers({
+            "Content-type": "application/json",
+            Authorization: "Bearer " + authToken,
+            apiKey: process.env.REACT_APP_APIKEY,
+          }),
+        }
+      );
+      const data = await response.json();
+      dispatch(fetchUsersSuccess(data.users));
+    } catch (error) {
+      dispatch(fetchUsersFail(error));
     }
   };
 };
@@ -149,7 +171,7 @@ export const editUserDetails =
       );
       const res = await response.json();
       dispatch(editUserSuccess(res));
-      dispatch(fetchOnSiteUsers(authToken));
+      dispatch(fetchAllUsers(authToken));
     } catch (error) {
       dispatch(editUserFail(error));
     }
@@ -227,7 +249,7 @@ export const createNewUser =
       );
       const res = await response.json();
       dispatch(createNewUserSuccess(res));
-      dispatch(fetchOnSiteUsers(authToken));
+      dispatch(fetchAllUsers(authToken));
     } catch (error) {
       dispatch(createNewUserFail(error));
     }
@@ -281,7 +303,7 @@ export const deleteUser = (userId, authToken, isAdmin) => async (dispatch) => {
       }
     );
     dispatch(deleteUserSuccess(`Success ${response.statusText}`));
-    dispatch(isAdmin ? fetchAllAdmins(authToken) : fetchOnSiteUsers(authToken));
+    dispatch(isAdmin ? fetchAllAdmins(authToken) : fetchAllUsers(authToken));
   } catch (error) {
     dispatch(deleteUserFail(error));
   }

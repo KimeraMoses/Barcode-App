@@ -1,4 +1,3 @@
-// import { useTranslation } from 'react-i18next';
 import { useEffect, useRef, useState } from "react";
 import { Heading, Table, Modal } from "components";
 import { exportToExcel } from "utils";
@@ -6,7 +5,7 @@ import { getColumns } from "./utils";
 import { AddUser, EditUser, DeleteUser } from "./sections";
 import "./AllUsers.styles.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOnSiteUsers } from "store/Actions/userActions";
+import { fetchAllUsers } from "store/Actions/userActions";
 import { uploadFile } from "./../../store/Actions/userActions";
 import { toast } from "react-toastify";
 import { messageNotifications } from "store";
@@ -18,7 +17,7 @@ function AllUsers() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchOnSiteUsers(authToken));
+    dispatch(fetchAllUsers(authToken));
   }, [authToken, dispatch]);
 
   const [modal, setModal] = useState(false);

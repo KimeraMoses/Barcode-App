@@ -38,7 +38,7 @@ const validationSchema__Admin = Yup.object().shape({
   password: Yup.string()
     .required("Password is required!")
     .min(8, "Password must be minimum of 8 characters"),
-  timeZone: Yup.string().required("Timezone is required!"),
+  // timeZone: Yup.string().required("Timezone is required!"),
 });
 export function AddUser({ setModal, isAdmin }) {
   const authToken = useSelector((state) => state.auth.token);

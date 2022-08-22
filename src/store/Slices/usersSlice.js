@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userList: [],
+  onSiteUsers: [],
   enbaledUsers: [],
   adminList: [],
   userEvents: [],
@@ -25,6 +26,11 @@ const userSlice = createSlice({
     },
     fetchUsersFail: (state, { payload }) => {
       state.message = payload.message;
+      state.status = payload.status;
+      state.isLoading = false;
+    },
+    fetchOnSiteUsersSuccess: (state, { payload }) => {
+      state.onSiteUsers = payload;
       state.status = payload.status;
       state.isLoading = false;
     },
@@ -147,6 +153,7 @@ export const {
   fetchUsersPending,
   fetchUsersSuccess,
   fetchUsersFail,
+  fetchOnSiteUsersSuccess,
   fetchAdminsPending,
   fetchAdminsSuccess,
   fetchAdminsFail,

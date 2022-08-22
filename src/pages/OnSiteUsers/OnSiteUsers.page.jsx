@@ -28,12 +28,14 @@ const columns = [
   {
     title: "LAST CHECK IN",
     dataIndex: "last_check_in",
-    sorter: (a, b) => (moment(a?.last_check_in) < moment(b?.last_check_in) ? -1 : 1),
+    sorter: (a, b) =>
+      moment(a?.last_check_in) < moment(b?.last_check_in) ? -1 : 1,
   },
   {
     title: "LAST CHECK OUT",
     dataIndex: "last_check_out",
-    sorter: (a, b) => (moment(a?.last_check_out) < moment(b?.last_check_out) ? -1 : 1),
+    sorter: (a, b) =>
+      moment(a?.last_check_out) < moment(b?.last_check_out) ? -1 : 1,
   },
 ];
 
@@ -52,7 +54,7 @@ export function isValidDate(dateObject) {
 
 function OnSiteUsers() {
   const authToken = useSelector((state) => state.auth.token);
-  const userList = useSelector((state) => state.users.userList);
+  const userList = useSelector((state) => state.users.onSiteUsers);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -130,8 +132,6 @@ function OnSiteUsers() {
       onClick: () => setCheckOutModal(true),
     },
   ];
-
-  console.log(data);
 
   return (
     <div className="on-site">
