@@ -1,10 +1,10 @@
-import { Input, Select, Table as AntdTable } from "antd";
+import { Input, Table as AntdTable } from "antd";
 import { Button } from "components";
-import { ArrowDown, ArrowLeft, ArrowRight, Search } from "icons";
+import { ArrowLeft, ArrowRight, Search } from "icons";
 import { useState } from "react";
 import "./Table.styles.scss";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 // Pagination Items
 function itemRender(current, type, originalElement) {
@@ -26,49 +26,49 @@ function itemRender(current, type, originalElement) {
 }
 
 export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
-  const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
+  // const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [currentFilter, setCurrentFilter] = useState("");
+  // const [filteredData, setFilteredData] = useState([]);
+  // const [currentFilter, setCurrentFilter] = useState("");
 
   let userFilteredData = data;
-  const filterHandler = (selected) => {
-    setSelectedFilter(selected);
-    const newData = userFilteredData?.sort((a, b) => {
-      let fa =
-          typeof a[selectedFilter] === "number"
-            ? a[selectedFilter].toString().toLowerCase()
-            : a[selectedFilter]?.toLowerCase(),
-        fb =
-          typeof b[selectedFilter] === "number"
-            ? b[selectedFilter].toString().toLowerCase()
-            : b[selectedFilter]?.toLowerCase();
-      setCurrentFilter(selectedFilter);
-      if (fa < fb) {
-        return currentFilter === selectedFilter ? 1 : -1;
-      }
-      if (fa > fb) {
-        return currentFilter === selectedFilter ? -1 : 1;
-      }
-      return 0;
-    });
+  // const filterHandler = (selected) => {
+  //   setSelectedFilter(selected);
+  //   const newData = userFilteredData?.sort((a, b) => {
+  //     let fa =
+  //         typeof a[selectedFilter] === "number"
+  //           ? a[selectedFilter].toString().toLowerCase()
+  //           : a[selectedFilter]?.toLowerCase(),
+  //       fb =
+  //         typeof b[selectedFilter] === "number"
+  //           ? b[selectedFilter].toString().toLowerCase()
+  //           : b[selectedFilter]?.toLowerCase();
+  //     setCurrentFilter(selectedFilter);
+  //     if (fa < fb) {
+  //       return currentFilter === selectedFilter ? 1 : -1;
+  //     }
+  //     if (fa > fb) {
+  //       return currentFilter === selectedFilter ? -1 : 1;
+  //     }
+  //     return 0;
+  //   });
 
-    if (newData.length) {
-      setFilteredData(newData);
-    } else {
-      setFilteredData([
-        {
-          key: "Not Found",
-          uid: "Not Found",
-          name: "Not Found",
-          status: "Not Found",
-          last_check_in: "Not Found",
-          last_check_out: "Not Found",
-        },
-      ]);
-    }
-  };
+  //   if (newData.length) {
+  //     setFilteredData(newData);
+  //   } else {
+  //     setFilteredData([
+  //       {
+  //         key: "Not Found",
+  //         uid: "Not Found",
+  //         name: "Not Found",
+  //         status: "Not Found",
+  //         last_check_in: "Not Found",
+  //         last_check_out: "Not Found",
+  //       },
+  //     ]);
+  //   }
+  // };
 
   const userSearchHandler = (e) => {
     const { value } = e.target;
@@ -112,7 +112,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
               value={searchTerm}
               onChange={userSearchHandler}
             />
-            <Select
+            {/* <Select
               suffixIcon={<ArrowDown color="#000" />}
               value={selectedFilter}
               className="custom-table__filters-select"
@@ -130,7 +130,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
                     </Option>
                   );
                 })}
-            </Select>
+            </Select> */}
           </div>
           <div className="custom-table__filters-buttons">
             {buttons?.map((btn) => {
@@ -153,13 +153,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
         rowSelection={rowSelection}
         sortDirections={["ascend", "descend", "ascend"]}
         columns={columns}
-        dataSource={
-          searchTerm.length > 0
-            ? [...searchResults]
-            : filteredData.length > 0
-            ? [...filteredData]
-            : [...data]
-        }
+        dataSource={searchTerm.length > 0 ? [...searchResults] : [...data]}
         className="custom-table__el"
         showSorterTooltip={false}
         pagination={{

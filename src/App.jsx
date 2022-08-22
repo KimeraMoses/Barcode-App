@@ -23,7 +23,9 @@ import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   const { webSettings } = useSelector((state) => state.settings);
-  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const isAuthenticated = !!JSON.parse(
+    localStorage.getItem("Barcode__AuthToken")
+  )?.token;
 
   const dispatch = useDispatch();
 
@@ -87,9 +89,7 @@ function App() {
           />
           <Route
             path="/dashboard/*"
-            element={
-              !isAuthenticated ? <Navigate to="/" /> : <LoggedInLayout />
-            }
+            element={isAuthenticated ? <LoggedInLayout /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>
