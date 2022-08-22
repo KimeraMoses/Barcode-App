@@ -4,8 +4,6 @@ import { ArrowLeft, ArrowRight, Search } from "icons";
 import { useState } from "react";
 import "./Table.styles.scss";
 
-// const { Option } = Select;
-
 // Pagination Items
 function itemRender(current, type, originalElement) {
   if (type === "prev") {

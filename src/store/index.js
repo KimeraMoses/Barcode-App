@@ -13,6 +13,7 @@ const store = configureStore({
     barCode: barCodeReducer,
     settings: settingSlice,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export default store;

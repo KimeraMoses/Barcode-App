@@ -2,8 +2,6 @@ import { Button, Input, SelectTimeZone, Switch } from "components";
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { messageNotifications } from "store";
 import { createNewAdmin, createNewUser } from "store/Actions/userActions";
 import * as Yup from "yup";
 import "./AddUser.styles.scss";
@@ -60,9 +58,9 @@ export function AddUser({ setModal, isAdmin }) {
         onSubmit={async (values, { resetForm }) => {
           setIsLoading(true);
           try {
-            await dispatch(
-              isAdmin
-                ? createNewAdmin(
+            isAdmin
+              ? await dispatch(
+                  createNewAdmin(
                     authToken,
                     values.name,
                     values.userName,
@@ -72,7 +70,9 @@ export function AddUser({ setModal, isAdmin }) {
                     values.superAdmin ? "super-admin" : "admin",
                     values.timeZone
                   )
-                : createNewUser(
+                )
+              : await dispatch(
+                  createNewUser(
                     authToken,
                     values.name,
                     values.email,
@@ -80,21 +80,12 @@ export function AddUser({ setModal, isAdmin }) {
                     values.status ? 1 : 0,
                     values.welcomeMsg
                   )
-            );
+                );
             resetForm();
             setIsLoading(false);
             setModal(false);
-            toast.success(
-              `New ${isAdmin ? "admin" : "user"} created successfuly`,
-              {
-                ...messageNotifications,
-              }
-            );
           } catch (error) {
             setIsLoading(false);
-            toast.error(`Failed to new user!`, {
-              ...messageNotifications,
-            });
           }
         }}
       >

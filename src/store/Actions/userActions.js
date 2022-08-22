@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import { messageNotifications } from "store";
 import { updateAdminDetails } from "store/Slices/authSlice";
 import {
   checkUsersFail,
@@ -227,8 +229,8 @@ export const editAdminDetails =
 export const createNewUser =
   (authToken, full_name, email, company, status, welcome_email_message) =>
   async (dispatch) => {
-    dispatch(createNewUserPending());
     try {
+      dispatch(createNewUserPending());
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/`,
         {
@@ -248,18 +250,28 @@ export const createNewUser =
         }
       );
       const res = await response.json();
-      dispatch(createNewUserSuccess(res));
-      dispatch(fetchAllUsers(authToken));
+      if (res?.status === "fail" && res?.message?.includes(email)) {
+        toast.error(
+          "Failed to create user, Email Already taken!",
+          messageNotifications
+        );
+        return;
+      } else {
+        toast.success("New user created successfuly", messageNotifications);
+        dispatch(createNewUserSuccess(res));
+        dispatch(fetchAllUsers(authToken));
+      }
     } catch (error) {
       dispatch(createNewUserFail(error));
+      toast.error("Failed to create user!");
     }
   };
 
 export const createNewAdmin =
   (authToken, full_name, username, password, email, status, role, timezone) =>
   async (dispatch) => {
-    dispatch(createNewUserPending());
     try {
+      dispatch(createNewUserPending());
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/admin/signup`,
         {
@@ -281,10 +293,19 @@ export const createNewAdmin =
         }
       );
       const res = await response.json();
-      dispatch(createNewUserSuccess(res));
-      dispatch(fetchAllAdmins(authToken));
+      if (res?.status === "fail" && res?.message?.includes("already in use")) {
+        return toast.error(
+          "Failed to create admin, Email Already taken!",
+          messageNotifications
+        );
+      } else {
+        toast.success("New admin created successfuly", messageNotifications);
+        dispatch(createNewUserSuccess(res));
+        dispatch(fetchAllAdmins(authToken));
+      }
     } catch (error) {
       dispatch(createNewUserFail(error));
+      toast.error("Failed to create user!");
     }
   };
 
