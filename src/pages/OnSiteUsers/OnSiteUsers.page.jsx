@@ -5,35 +5,35 @@ import "./OnSiteUsers.styles.scss";
 import { fetchOnSiteUsers } from "store/Actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import EnabledUsers from "./EnabledUsers";
+import moment from "moment";
 
 // Columns for table
 const columns = [
   {
     title: "USER ID",
     dataIndex: "uid",
-    sorter: (a, b) => a.uuid - b.uuid,
+    sorter: (a, b) => (a?.uid < b?.uid ? -1 : 1),
   },
   {
     title: "NAME",
     dataIndex: "name",
-    sorter: (a, b) => a.full_name.length - b.full_name.length,
+    sorter: (a, b) => (a?.name < b?.name ? -1 : 1),
   },
   {
     title: "STATUS",
     dataIndex: "status",
     width: 300,
     render: (text) => <div className="on-site__status">{text}</div>,
-    sorter: (a, b) => a.status.length - b.status.length,
   },
   {
     title: "LAST CHECK IN",
     dataIndex: "last_check_in",
-    sorter: (a, b) => a.lastCheckIn - b.lastCheckIn,
+    sorter: (a, b) => (moment(a?.last_check_in) < moment(b?.last_check_in) ? -1 : 1),
   },
   {
     title: "LAST CHECK OUT",
     dataIndex: "last_check_out",
-    sorter: (a, b) => a.lastCheckout - b.lastCheckout,
+    sorter: (a, b) => (moment(a?.last_check_out) < moment(b?.last_check_out) ? -1 : 1),
   },
 ];
 
@@ -130,6 +130,8 @@ function OnSiteUsers() {
       onClick: () => setCheckOutModal(true),
     },
   ];
+
+  console.log(data);
 
   return (
     <div className="on-site">

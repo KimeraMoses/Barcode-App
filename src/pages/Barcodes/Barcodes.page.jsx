@@ -14,7 +14,7 @@ const columns = [
   {
     title: "Scan ID",
     dataIndex: "sid",
-    sorter: (a, b) => a.sid - b.sid,
+    sorter: (a, b) => (a?.sid < b?.sid ? -1 : 1),
   },
   {
     title: "IMAGE",
@@ -41,7 +41,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     width: 900,
-    sorter: (a, b) => a.full_name.length - b.full_name.length,
+    sorter: (a, b) => (a?.name < b?.name ? -1 : 1),
   },
   {
     title: "Status",

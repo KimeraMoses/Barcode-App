@@ -1,7 +1,7 @@
 import { Input, Select, Table as AntdTable } from "antd";
 import { Button } from "components";
 import { ArrowDown, ArrowLeft, ArrowRight, Search } from "icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Table.styles.scss";
 
 const { Option } = Select;
@@ -30,9 +30,11 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState("");
 
   let userFilteredData = data;
-  useEffect(() => {
+  const filterHandler = (selected) => {
+    setSelectedFilter(selected);
     const newData = userFilteredData?.sort((a, b) => {
       let fa =
           typeof a[selectedFilter] === "number"
@@ -42,14 +44,16 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
           typeof b[selectedFilter] === "number"
             ? b[selectedFilter].toString().toLowerCase()
             : b[selectedFilter]?.toLowerCase();
+      setCurrentFilter(selectedFilter);
       if (fa < fb) {
-        return -1;
+        return currentFilter === selectedFilter ? 1 : -1;
       }
       if (fa > fb) {
-        return 1;
+        return currentFilter === selectedFilter ? -1 : 1;
       }
       return 0;
     });
+
     if (newData.length) {
       setFilteredData(newData);
     } else {
@@ -64,7 +68,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
         },
       ]);
     }
-  }, [selectedFilter, userFilteredData]);
+  };
 
   const userSearchHandler = (e) => {
     const { value } = e.target;
@@ -114,16 +118,18 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
               className="custom-table__filters-select"
               dropdownClassName="custom-select__dropdown"
               onChange={(selected) => {
-                setSelectedFilter(selected);
+                filterHandler(selected);
               }}
             >
-              {columns?.map((col) => {
-                return (
-                  <Option key={col?.dataIndex} value={col?.dataIndex}>
-                    Filter By : {col?.title}
-                  </Option>
-                );
-              })}
+              {columns
+                ?.filter((col) => col["sorter"] !== undefined)
+                .map((col) => {
+                  return (
+                    <Option key={col?.dataIndex} value={col?.dataIndex}>
+                      Filter By : {col?.title}
+                    </Option>
+                  );
+                })}
             </Select>
           </div>
           <div className="custom-table__filters-buttons">
@@ -145,6 +151,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
 
       <AntdTable
         rowSelection={rowSelection}
+        sortDirections={["ascend", "descend", "ascend"]}
         columns={columns}
         dataSource={
           searchTerm.length > 0

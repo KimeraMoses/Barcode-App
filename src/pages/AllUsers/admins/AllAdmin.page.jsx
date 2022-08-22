@@ -1,4 +1,3 @@
-// import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from "react";
 import "./../AllUsers.styles.scss";
 import { useDispatch, useSelector } from "react-redux";

@@ -18,7 +18,6 @@ function AllUsers() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // dispatch(fetchAllUsers(authToken));
     dispatch(fetchOnSiteUsers(authToken));
   }, [authToken, dispatch]);
 

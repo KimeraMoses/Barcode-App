@@ -6,17 +6,17 @@ export const getColumns = (onEditClick, onDeleteClick) => {
     {
       title: "USER ID",
       dataIndex: "uid",
-      sorter: (a, b) => a.uid - b.uid,
+      sorter: (a, b) => (a?.uid < b?.uid ? -1 : 1),
     },
     {
       title: "NAME",
       dataIndex: "name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => (a?.name < b?.name ? -1 : 1),
     },
     {
       title: "COMPANY",
       dataIndex: "company",
-      sorter: (a, b) => a.company.length - b.company.length,
+      sorter: (a, b) => (a?.company < b?.company ? -1 : 1),
     },
     {
       title: "STATUS",
@@ -31,7 +31,6 @@ export const getColumns = (onEditClick, onDeleteClick) => {
           {text}
         </div>
       ),
-      sorter: (a, b) => a.status.length - b.status.length,
     },
     {
       title: "CHECK INS",
@@ -87,17 +86,17 @@ export const getAdminColumns = (onEditClick, onDeleteClick) => {
     {
       title: "USER ID",
       dataIndex: "uid",
-      sorter: (a, b) => a.uid - b.uid,
+      sorter: (a, b) => (a?.uid < b?.uid ? -1 : 1),
     },
     {
       title: "NAME",
       dataIndex: "name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => (a?.name < b?.name ? -1 : 1),
     },
     {
       title: "EMAIL",
       dataIndex: "email",
-      sorter: (a, b) => a.email.length - b.email.length,
+      sorter: (a, b) => (a?.email < b?.email ? -1 : 1),
     },
     {
       title: "STATUS",
@@ -112,7 +111,7 @@ export const getAdminColumns = (onEditClick, onDeleteClick) => {
           {text}
         </div>
       ),
-      sorter: (a, b) => a.status.length - b.status.length,
+      sorter: (a, b) => (a?.status < b?.status ? -1 : 1),
     },
     {
       title: "ACTIONS",

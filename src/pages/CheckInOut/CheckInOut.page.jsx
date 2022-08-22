@@ -6,19 +6,20 @@ import "./CheckInOut.styles.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUserEvents } from "store/Actions/userActions";
 import { dateFormat, isValidDate } from "pages/OnSiteUsers/OnSiteUsers.page";
+import moment from "moment";
 
 // Columns for table
 const columns = [
   {
     title: "USER ID",
     dataIndex: "uid",
-    sorter: (a, b) => a.uid - b.uid,
+    sorter: (a, b) => (a?.uid < b?.uid ? -1 : 1),
   },
   {
     title: "NAME",
     dataIndex: "name",
     width: 300,
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b) => (a?.name < b?.name ? -1 : 1),
   },
   {
     title: "EVENT",
@@ -33,13 +34,14 @@ const columns = [
         {text}
       </div>
     ),
-    sorter: (a, b) => a.status.length - b.status.length,
+    sorter: (a, b) => (a?.event < b?.event ? -1 : 1),
   },
   {
     title: "Date",
     dataIndex: "last_check_out",
     width: 300,
-    sorter: (a, b) => a.last_check_out - b.last_check_out,
+    sorter: (a, b) =>
+      moment(a?.last_check_out) < moment(b?.last_check_out) ? -1 : 1,
   },
 ];
 
