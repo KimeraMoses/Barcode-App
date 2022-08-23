@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import "../../styles/mixins";
 
 .custom-table {
   // Checkbox radius
@@ -224,4 +224,12 @@
   .ant-select-item {
     padding: 10px 12px;
   }
+}
+
+.loading_spinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
 }

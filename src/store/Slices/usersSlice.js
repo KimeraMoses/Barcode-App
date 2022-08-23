@@ -8,6 +8,7 @@ const initialState = {
   userEvents: [],
   userDetails: {},
   isLoading: false,
+  isFetching: false,
   liveCount: 5,
   message: "",
   status: "",
@@ -16,22 +17,28 @@ const userSlice = createSlice({
   name: "userList",
   initialState,
   reducers: {
+    fetchingUserData: (state, { payload }) => {
+      state.isFetching = payload;
+    },
+    loadingUserData: (state, { payload }) => {
+      state.isLoading = payload;
+    },
     fetchUsersPending: (state) => {
       state.isLoading = true;
     },
     fetchUsersSuccess: (state, { payload }) => {
       state.userList = payload;
-      state.status = payload.status;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchUsersFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload?.message;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchOnSiteUsersSuccess: (state, { payload }) => {
       state.onSiteUsers = payload;
-      state.status = payload.status;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchEnabledUsersPending: (state) => {
@@ -39,12 +46,12 @@ const userSlice = createSlice({
     },
     fetchEnabledUsersSuccess: (state, { payload }) => {
       state.enbaledUsers = payload;
-      state.status = payload.status;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchEnabledUsersFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload?.message;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchEventsPending: (state) => {
@@ -52,12 +59,12 @@ const userSlice = createSlice({
     },
     fetchEventsSuccess: (state, { payload }) => {
       state.userEvents = payload;
-      state.status = payload.status;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchEventsFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload?.message;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchAdminsPending: (state) => {
@@ -65,12 +72,12 @@ const userSlice = createSlice({
     },
     fetchAdminsSuccess: (state, { payload }) => {
       state.adminList = payload;
-      state.status = payload.status;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchAdminsFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload?.message;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchUserpending: (state) => {
@@ -82,8 +89,8 @@ const userSlice = createSlice({
       state.message = "";
     },
     fetchUserFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload?.message;
+      state.status = payload?.status;
       state.isLoading = false;
     },
     fetchLiveCount: (state, { payload }) => {
@@ -105,11 +112,11 @@ const userSlice = createSlice({
     },
     deleteUserSuccess: (state, { payload }) => {
       state.isLoading = false;
-      state.message = payload.message;
+      state.message = payload?.message;
     },
     deleteUserFail: (state, { payload }) => {
       state.isLoading = false;
-      state.message = payload.message;
+      state.message = payload?.message;
     },
     editUserPending: (state) => {
       state.isLoading = true;
@@ -150,6 +157,8 @@ const userSlice = createSlice({
 const { reducer, actions } = userSlice;
 
 export const {
+  fetchingUserData,
+  loadingUserData,
   fetchUsersPending,
   fetchUsersSuccess,
   fetchUsersFail,

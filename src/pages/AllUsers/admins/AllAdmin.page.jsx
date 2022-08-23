@@ -9,7 +9,7 @@ import { fetchAllAdmins } from "./../../../store/Actions/userActions";
 
 function AllAdmins() {
   const authToken = useSelector((state) => state.auth.token);
-  const adminList = useSelector((state) => state.users.adminList);
+  const { adminList, isFetching } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -99,7 +99,12 @@ function AllAdmins() {
       </div>
       <div>
         {columns ? (
-          <Table columns={columns} data={data} buttons={buttons} />
+          <Table
+            columns={columns}
+            data={data}
+            buttons={buttons}
+            isLoading={isFetching}
+          />
         ) : null}
       </div>
     </div>

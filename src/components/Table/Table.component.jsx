@@ -23,50 +23,18 @@ function itemRender(current, type, originalElement) {
   return originalElement;
 }
 
-export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
-  // const [selectedFilter, setSelectedFilter] = useState(columns[0]?.dataIndex);
+export function Table({
+  data,
+  columns,
+  rowSelection,
+  buttons,
+  pageSize = 5,
+  isLoading,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  // const [filteredData, setFilteredData] = useState([]);
-  // const [currentFilter, setCurrentFilter] = useState("");
 
   let userFilteredData = data;
-  // const filterHandler = (selected) => {
-  //   setSelectedFilter(selected);
-  //   const newData = userFilteredData?.sort((a, b) => {
-  //     let fa =
-  //         typeof a[selectedFilter] === "number"
-  //           ? a[selectedFilter].toString().toLowerCase()
-  //           : a[selectedFilter]?.toLowerCase(),
-  //       fb =
-  //         typeof b[selectedFilter] === "number"
-  //           ? b[selectedFilter].toString().toLowerCase()
-  //           : b[selectedFilter]?.toLowerCase();
-  //     setCurrentFilter(selectedFilter);
-  //     if (fa < fb) {
-  //       return currentFilter === selectedFilter ? 1 : -1;
-  //     }
-  //     if (fa > fb) {
-  //       return currentFilter === selectedFilter ? -1 : 1;
-  //     }
-  //     return 0;
-  //   });
-
-  //   if (newData.length) {
-  //     setFilteredData(newData);
-  //   } else {
-  //     setFilteredData([
-  //       {
-  //         key: "Not Found",
-  //         uid: "Not Found",
-  //         name: "Not Found",
-  //         status: "Not Found",
-  //         last_check_in: "Not Found",
-  //         last_check_out: "Not Found",
-  //       },
-  //     ]);
-  //   }
-  // };
 
   const userSearchHandler = (e) => {
     const { value } = e.target;
@@ -110,25 +78,6 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
               value={searchTerm}
               onChange={userSearchHandler}
             />
-            {/* <Select
-              suffixIcon={<ArrowDown color="#000" />}
-              value={selectedFilter}
-              className="custom-table__filters-select"
-              dropdownClassName="custom-select__dropdown"
-              onChange={(selected) => {
-                filterHandler(selected);
-              }}
-            >
-              {columns
-                ?.filter((col) => col["sorter"] !== undefined)
-                .map((col) => {
-                  return (
-                    <Option key={col?.dataIndex} value={col?.dataIndex}>
-                      Filter By : {col?.title}
-                    </Option>
-                  );
-                })}
-            </Select> */}
           </div>
           <div className="custom-table__filters-buttons">
             {buttons?.map((btn) => {
@@ -146,7 +95,6 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
           </div>
         </div>
       </div>
-
       <AntdTable
         rowSelection={rowSelection}
         sortDirections={["ascend", "descend", "ascend"]}
@@ -161,6 +109,7 @@ export function Table({ data, columns, rowSelection, buttons, pageSize = 5 }) {
             `Showing ${range[0]}-${range[1]} of ${total} Records`,
         }}
         scroll={{ x: true }}
+        loading={isLoading}
       />
     </div>
   );

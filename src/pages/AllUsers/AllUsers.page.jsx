@@ -12,7 +12,7 @@ import { messageNotifications } from "store";
 
 function AllUsers() {
   const authToken = useSelector((state) => state.auth.token);
-  const userList = useSelector((state) => state.users.userList);
+  const { userList, isFetching } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -128,7 +128,12 @@ function AllUsers() {
       </div>
       <div>
         {columns ? (
-          <Table columns={columns} data={data} buttons={buttons} />
+          <Table
+            columns={columns}
+            data={data}
+            buttons={buttons}
+            isLoading={isFetching}
+          />
         ) : null}
       </div>
     </div>

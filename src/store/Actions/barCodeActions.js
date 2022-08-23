@@ -1,12 +1,12 @@
 import {
   fetchBarCodesFail,
-  fetchBarCodesPending,
   fetchBarCodesSuccess,
+  fetchingBarcodes,
 } from "store/Slices/barCodeSlice";
 
 export const fetchBardCodes = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchBarCodesPending());
+    dispatch(fetchingBarcodes(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/bar-codes`,
@@ -21,8 +21,10 @@ export const fetchBardCodes = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchBarCodesSuccess(data.barcodes));
+      dispatch(fetchingBarcodes(false));
     } catch (error) {
       dispatch(fetchBarCodesFail(error));
+      dispatch(fetchingBarcodes(false));
     }
   };
 };

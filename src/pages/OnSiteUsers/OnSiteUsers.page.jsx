@@ -54,7 +54,7 @@ export function isValidDate(dateObject) {
 
 function OnSiteUsers() {
   const authToken = useSelector((state) => state.auth.token);
-  const userList = useSelector((state) => state.users.onSiteUsers);
+  const { isFetching, onSiteUsers } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -80,8 +80,8 @@ function OnSiteUsers() {
 
   let data = [];
 
-  userList &&
-    userList
+  onSiteUsers &&
+    onSiteUsers
       .slice()
       .sort((a, b) => new Date(b.created) - new Date(a.created))
       .forEach((user) => {
@@ -157,6 +157,7 @@ function OnSiteUsers() {
           data={data}
           rowSelection={rowSelection}
           buttons={buttons}
+          isLoading={isFetching}
         />
       </div>
     </div>

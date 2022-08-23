@@ -1,9 +1,7 @@
-// import { useTranslation } from 'react-i18next';
 import { Heading, Table } from "components";
 import { useReactToPrint } from "react-to-print";
 import { useState, useRef, useEffect } from "react";
 import ReactBarcode from "react-jsbarcode";
-// import { exportToExcel } from 'utils';
 import "./Barcodes.styles.scss";
 import { PrintArea } from "./sections";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,7 +58,7 @@ const columns = [
 
 function Barcodes() {
   const authToken = useSelector((state) => state.auth.token);
-  const barCodeList = useSelector((state) => state.barCode.barCodeList);
+  const { barCodeList, isFetching } = useSelector((state) => state.barCode);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchBardCodes(authToken));
@@ -124,7 +122,8 @@ function Barcodes() {
           data={data}
           buttons={buttons}
           rowSelection={rowSelection}
-          pageSize={16}
+          pageSize={5}
+          isLoading={isFetching}
         />
         <PrintArea ref={printAreaRef} rows={rows} />
       </div>

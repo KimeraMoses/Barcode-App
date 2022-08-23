@@ -47,7 +47,7 @@ const columns = [
 
 function CheckIn() {
   const authToken = useSelector((state) => state.auth.token);
-  const userEvents = useSelector((state) => state.users.userEvents);
+  const { isFetching, userEvents } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllUserEvents(authToken));
@@ -91,7 +91,12 @@ function CheckIn() {
         <Heading>Check Ins & Check Outs</Heading>
       </div>
       <div>
-        <Table columns={columns} data={data} buttons={buttons} />
+        <Table
+          columns={columns}
+          data={data}
+          buttons={buttons}
+          isLoading={isFetching}
+        />
       </div>
     </div>
   );

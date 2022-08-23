@@ -23,11 +23,13 @@ import Spinner from "./components/Spinner/Spinner";
 
 function App() {
   const { webSettings } = useSelector((state) => state.settings);
-  const isAuthenticated = !!JSON.parse(
-    localStorage.getItem("Barcode__AuthToken")
-  )?.token;
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isAuth = !!JSON.parse(localStorage.getItem("Barcode__AuthToken"))
+    ?.token;
 
   const dispatch = useDispatch();
+
+  const isAuthenticated = isAuth || isLoggedIn;
 
   useEffect(() => {
     AutoAuthenticate(dispatch);

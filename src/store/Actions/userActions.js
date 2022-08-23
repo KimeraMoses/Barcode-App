@@ -3,39 +3,32 @@ import { messageNotifications } from "store";
 import { updateAdminDetails } from "store/Slices/authSlice";
 import {
   checkUsersFail,
-  checkUsersPending,
   checkUsersSuccess,
   createNewUserFail,
-  createNewUserPending,
   createNewUserSuccess,
   deleteUserFail,
-  deleteUserPending,
   deleteUserSuccess,
   editUserFail,
-  editUserPending,
   editUserSuccess,
   fetchAdminsFail,
-  fetchAdminsPending,
   fetchAdminsSuccess,
   fetchEnabledUsersFail,
-  fetchEnabledUsersPending,
   fetchEnabledUsersSuccess,
   fetchEventsFail,
-  fetchEventsPending,
   fetchEventsSuccess,
+  fetchingUserData,
   fetchLiveCount,
   fetchOnSiteUsersSuccess,
   fetchUsersFail,
-  fetchUsersPending,
   fetchUsersSuccess,
+  loadingUserData,
   uploadingFileFail,
-  uploadingFilePending,
   uploadingFileSuccess,
 } from "store/Slices/usersSlice";
 
 export const fetchAllUserEvents = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchEventsPending());
+    dispatch(fetchingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/userEvents`,
@@ -50,16 +43,18 @@ export const fetchAllUserEvents = (authToken) => {
       );
       const res = await response.json();
       dispatch(fetchEventsSuccess(res?.data));
+      dispatch(fetchingUserData(false));
     } catch (error) {
       dispatch(fetchEventsFail(error));
+      dispatch(fetchingUserData(false));
     }
   };
 };
 
 export const fetchOnSiteUsers = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchUsersPending());
     try {
+      dispatch(fetchingUserData(true));
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/getStats`,
         {
@@ -74,7 +69,9 @@ export const fetchOnSiteUsers = (authToken) => {
       const data = await response.json();
       dispatch(fetchOnSiteUsersSuccess(data.users));
       dispatch(fetchLiveCount(data.liveCount));
+      dispatch(fetchingUserData(false));
     } catch (error) {
+      dispatch(fetchingUserData(false));
       dispatch(fetchUsersFail(error));
     }
   };
@@ -82,7 +79,7 @@ export const fetchOnSiteUsers = (authToken) => {
 
 export const fetchEnabledUsers = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchEnabledUsersPending());
+    dispatch(fetchingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/getEnabledUsers`,
@@ -97,15 +94,17 @@ export const fetchEnabledUsers = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchEnabledUsersSuccess(data?.users));
+      dispatch(fetchingUserData(false));
     } catch (error) {
       dispatch(fetchEnabledUsersFail(error));
+      dispatch(fetchingUserData(false));
     }
   };
 };
 
 export const fetchAllUsers = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchUsersPending());
+    dispatch(fetchingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/`,
@@ -120,7 +119,9 @@ export const fetchAllUsers = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchUsersSuccess(data.users));
+      dispatch(fetchingUserData(false));
     } catch (error) {
+      dispatch(fetchingUserData(false));
       dispatch(fetchUsersFail(error));
     }
   };
@@ -128,7 +129,7 @@ export const fetchAllUsers = (authToken) => {
 
 export const fetchAllAdmins = (authToken) => {
   return async (dispatch) => {
-    dispatch(fetchAdminsPending());
+    dispatch(fetchingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/admin/`,
@@ -143,7 +144,11 @@ export const fetchAllAdmins = (authToken) => {
       );
       const data = await response.json();
       dispatch(fetchAdminsSuccess(data.admins));
+      dispatch(fetchingUserData(false));
+      console.log("admin", data);
     } catch (error) {
+      console.log("admin", error);
+      dispatch(fetchingUserData(false));
       dispatch(fetchAdminsFail(error));
     }
   };
@@ -152,7 +157,7 @@ export const fetchAllAdmins = (authToken) => {
 export const editUserDetails =
   (userId, authToken, full_name, email, company, status) =>
   async (dispatch) => {
-    dispatch(editUserPending());
+    dispatch(loadingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/${userId}`,
@@ -174,8 +179,10 @@ export const editUserDetails =
       const res = await response.json();
       dispatch(editUserSuccess(res));
       dispatch(fetchAllUsers(authToken));
+      dispatch(loadingUserData(false));
     } catch (error) {
       dispatch(editUserFail(error));
+      dispatch(loadingUserData(false));
     }
   };
 
@@ -192,7 +199,7 @@ export const editAdminDetails =
     isLoggedIn
   ) =>
   async (dispatch) => {
-    dispatch(editUserPending());
+    dispatch(loadingUserData(true));
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/admin/${userId}`,
@@ -214,6 +221,7 @@ export const editAdminDetails =
         }
       );
       const res = await response.json();
+      dispatch(loadingUserData(false));
       dispatch(editUserSuccess(res));
       dispatch(
         isLoggedIn ? updateAdminDetails(res.admin) : fetchAllAdmins(authToken)
@@ -223,6 +231,7 @@ export const editAdminDetails =
       }
     } catch (error) {
       dispatch(editUserFail(error));
+      dispatch(loadingUserData(false));
     }
   };
 
@@ -230,7 +239,7 @@ export const createNewUser =
   (authToken, full_name, email, company, status, welcome_email_message) =>
   async (dispatch) => {
     try {
-      dispatch(createNewUserPending());
+      dispatch(loadingUserData(true));
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/users/`,
         {
@@ -250,6 +259,7 @@ export const createNewUser =
         }
       );
       const res = await response.json();
+      dispatch(loadingUserData(false));
       if (res?.status === "fail" && res?.message?.includes(email)) {
         toast.error(
           "Failed to create user, Email Already taken!",
@@ -264,6 +274,7 @@ export const createNewUser =
     } catch (error) {
       dispatch(createNewUserFail(error));
       toast.error("Failed to create user!");
+      dispatch(loadingUserData(false));
     }
   };
 
@@ -271,7 +282,7 @@ export const createNewAdmin =
   (authToken, full_name, username, password, email, status, role, timezone) =>
   async (dispatch) => {
     try {
-      dispatch(createNewUserPending());
+      dispatch(loadingUserData(true));
       const response = await fetch(
         `${process.env.REACT_APP_BASEURL}/api/v1/admin/signup`,
         {
@@ -302,15 +313,17 @@ export const createNewAdmin =
         toast.success("New admin created successfuly", messageNotifications);
         dispatch(createNewUserSuccess(res));
         dispatch(fetchAllAdmins(authToken));
+        dispatch(loadingUserData(false));
       }
     } catch (error) {
       dispatch(createNewUserFail(error));
       toast.error("Failed to create user!");
+      dispatch(loadingUserData(false));
     }
   };
 
 export const deleteUser = (userId, authToken, isAdmin) => async (dispatch) => {
-  dispatch(deleteUserPending());
+  dispatch(loadingUserData(true));
   const path = `${isAdmin ? "/api/v1/admin/" : "/api/v1/users/"}`;
   try {
     const response = await fetch(
@@ -325,14 +338,16 @@ export const deleteUser = (userId, authToken, isAdmin) => async (dispatch) => {
     );
     dispatch(deleteUserSuccess(`Success ${response.statusText}`));
     dispatch(isAdmin ? fetchAllAdmins(authToken) : fetchAllUsers(authToken));
+    dispatch(loadingUserData(false));
   } catch (error) {
     dispatch(deleteUserFail(error));
+    dispatch(loadingUserData(false));
   }
 };
 
 export const uploadFile = (file, authToken) => {
   return async (dispatch) => {
-    dispatch(uploadingFilePending());
+    dispatch(loadingUserData(true));
     const data = new FormData();
     data.append("file", file);
 
@@ -351,15 +366,17 @@ export const uploadFile = (file, authToken) => {
     if (!response.ok) {
       const error = await response.json();
       dispatch(uploadingFileFail(error));
+      dispatch(loadingUserData(false));
     }
     const res = await response.json();
     dispatch(uploadingFileSuccess(res));
+    dispatch(loadingUserData(false));
   };
 };
 
 export const checkInUsers =
   (user_ids, authToken, checkIn) => async (dispatch) => {
-    dispatch(checkUsersPending());
+    dispatch(loadingUserData(true));
     const path = `${
       checkIn
         ? "/api/v1/checkIn/manuallyCheckInUsers"
@@ -381,7 +398,9 @@ export const checkInUsers =
       dispatch(checkUsersSuccess(res));
       dispatch(fetchOnSiteUsers(authToken));
       dispatch(fetchEnabledUsers(authToken));
+      dispatch(loadingUserData(false));
     } catch (error) {
       dispatch(checkUsersFail(error));
+      dispatch(loadingUserData(false));
     }
   };

@@ -4,6 +4,7 @@ const initialState = {
   barCodeList: [],
   barCodeDetails: {},
   isLoading: false,
+  isFetching: false,
   message: "",
   status: "",
 };
@@ -11,24 +12,22 @@ const barCodeSlice = createSlice({
   name: "barCode",
   initialState,
   reducers: {
-    fetchBarCodesPending: (state) => {
-      state.isLoading = true;
+    fetchingBarcodes: (state, { payload }) => {
+      state.isFetching = payload;
     },
     fetchBarCodesSuccess: (state, { payload }) => {
       state.barCodeList = payload;
       state.status = payload.status;
-      state.isLoading = false;
     },
     fetchBarCodesFail: (state, { payload }) => {
       state.message = payload.message;
       state.status = payload.status;
-      state.isLoading = false;
     },
     fetchBarCodepending: (state) => {
       state.isLoading = true;
     },
     fetchBarCodeSuccess: (state, action) => {
-      state.BarCodeDetails = action.payload;
+      state.barCodeDetails = action.payload;
       state.isLoading = false;
       state.message = "";
     },
@@ -88,5 +87,6 @@ export const {
   editBarCodePending,
   editBarCodeSuccess,
   editBarCodeFail,
+  fetchingBarcodes,
 } = actions;
 export default reducer;
