@@ -10,7 +10,6 @@ function LoggedInLayout() {
   const { loggedIn } = styles;
   const { user } = useSelector((state) => state.auth);
   const isSupperAdmin = user && user.role === "super-admin" ? true : false;
-
   return (
     <>
       <div>

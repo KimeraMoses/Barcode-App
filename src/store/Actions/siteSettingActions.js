@@ -130,7 +130,10 @@ export const editAppSettings =
     app_logo,
     app_primary_color,
     app_secondary_color,
+<<<<<<< HEAD
     home_page_message,
+=======
+>>>>>>> 95c6faca11ddbdf6e91355e28c06fd1e56331726
     authToken
   ) =>
   async (dispatch) => {
@@ -145,7 +148,10 @@ export const editAppSettings =
             app_logo,
             app_primary_color,
             app_secondary_color,
+<<<<<<< HEAD
             home_page_message,
+=======
+>>>>>>> 95c6faca11ddbdf6e91355e28c06fd1e56331726
           }),
           headers: new Headers({
             "Content-type": "application/json",
@@ -157,6 +163,11 @@ export const editAppSettings =
       const res = await response.json();
       dispatch(updateWebSettingsSuccess(res.setting));
       dispatch(fetchAppSiteSetting());
+<<<<<<< HEAD
+=======
+      dispatch(setPrimaryColor(res.setting.site_primary_color));
+      dispatch(setSecondaryColor(res.setting.site_secondary_color));
+>>>>>>> 95c6faca11ddbdf6e91355e28c06fd1e56331726
     } catch (error) {
       dispatch(updateWebSettingsFail(error));
     }

@@ -1,5 +1,5 @@
-import { Field } from 'formik';
-import './SelectTimeZone.styles.scss';
+import { Field } from "formik";
+import "./SelectTimeZone.styles.scss";
 
 export function SelectTimeZone({ name, onChange, label }) {
   return (
